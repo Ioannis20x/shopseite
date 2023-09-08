@@ -145,7 +145,7 @@
         #suchleiste {
             height: inherit;
             position: relative;
-            top: -8px;
+            top: -6px;
             left: -0px;
             display: inline-block;
         }
@@ -154,12 +154,18 @@
             outline: none;
         }
 
-        button {
+        button[type="submit"]:hover{
+            background-color: gray  ;
+        }
+        button[type="submit"]{
             display: inline-block;
             height: inherit;
             background: none;
+            border-width: 0;
+            border-style: none;
+            outline: none;
         }
-
+       
         #kategorien {
             position: relative;
             display: flexbox;
