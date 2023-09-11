@@ -138,10 +138,12 @@
             display: flex;
             flex-direction: column;
         }
-        .kategorie{
+
+        .kategorie {
             margin-bottom: 20px;
-            
+
         }
+
         #suchleiste {
             height: inherit;
             position: relative;
@@ -154,10 +156,11 @@
             outline: none;
         }
 
-        button[type="submit"]:hover{
-            background-color: gray  ;
+        button[type="submit"]:hover {
+            background-color: gray;
         }
-        button[type="submit"]{
+
+        button[type="submit"] {
             display: inline-block;
             height: inherit;
             background: none;
@@ -165,7 +168,7 @@
             border-style: none;
             outline: none;
         }
-       
+
         #kategorien {
             position: relative;
             display: flexbox;
