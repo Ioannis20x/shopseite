@@ -278,8 +278,8 @@
                 <option value="audi">100€ - 2000€</option>
             </select>
         </div>
-
     </div>
+
     <div class="grid-container">
         <?php
         include "db.php";
