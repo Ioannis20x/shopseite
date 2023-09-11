@@ -110,6 +110,7 @@
             height: 30px;
             margin-top: 20px;
             margin-bottom: 10px;
+            margin-left: -10px;
             display: inline-block;
             border: solid 1px;
 
@@ -138,7 +139,8 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-top: 65px;
+            margin-left: 40px;
+            margin-top: 35px;
             width: 50px;
         }
 
@@ -180,8 +182,8 @@
             height: 150px;
             left: -35px;
             min-height: 150px;
-            margin-top: -190px;
-            margin-left: 150px;
+            margin-top: -149px;
+            margin-left: 100px;
             float: left;
         }
 
