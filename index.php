@@ -204,6 +204,14 @@
             margin-top: 10px;
         }
 
+        #h2price {
+            display: inline-block;
+            position: absolute;
+            top: 250px;
+            left: 50px;
+            border: none;
+        }
+
         #h2kat {
             display: inline-block;
             position: absolute;
@@ -249,6 +257,15 @@
             <label for="laptopcb">Laptops</label>
             <label for="monitorcb">Monitore</label>
             <label for="sonstcb">Sonstiges</label>
+        </div>
+        <h2 id="h2price">Preisspanne</h2>
+        <div id="pricefilter">
+            <select name="cars" id="prices">
+                    <option value="volvo">Volvo</option>
+                    <option value="saab">Saab</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="audi">Audi</option>
+            </select>
         </div>
 
     </div>

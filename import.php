@@ -17,7 +17,7 @@ function importproducts($dhandle)
             if ($checkres->num_rows > 0) {
                 echo "ACHTUNG: DATENSATZ VORHANDEN<br>";
             } else {
-                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname, seite) VALUES ('$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]')";
+                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) VALUES ('$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]')";
                 dbaction($dhandle, $sql);
             }
         } else {
