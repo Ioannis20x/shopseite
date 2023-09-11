@@ -20,7 +20,7 @@
             width: 500px;
             height: 500px;
             margin-bottom: 50px;
-            box-shadow: 0px 0px 10px black;
+            box-shadow: -1px 0px 2px grey;
             text-align: left;
             margin-left: 10px;
         }
@@ -89,13 +89,20 @@
             margin-left: 45px;
         }
 
+        html,
+        body {
+            height: 100%;
+        }
+
         #filter {
             float: left;
             width: 300px;
+            min-height: 100%;
+            height: auto !important;
             height: 100%;
             display: block;
             text-align: center;
-            box-shadow: 0px 0px 10px black;
+            box-shadow: rgba(0, 0, 0, 0.15) 3.95px 0px 6px;
             align-content: center;
         }
 
