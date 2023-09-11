@@ -137,10 +137,15 @@
         #checkboxen {
             display: flex;
             flex-direction: column;
+            margin-right: 0;
+            gap: 10px;
+            margin-top: 75px;
+            width: 50px;
         }
 
         .kategorie {
             margin-bottom: 20px;
+            width: 20px;
 
         }
 
@@ -171,13 +176,13 @@
 
         #kategorien {
             position: relative;
-            display: flexbox;
             width: 60px;
             height: auto !important;
             height: 150px;
             left: -35px;
             min-height: 150px;
-            margin-top: 30px;
+            margin-top: -150px;
+            margin-left: 150px;
             float: left;
         }
 
