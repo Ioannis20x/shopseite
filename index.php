@@ -207,7 +207,7 @@
         #h2price {
             display: inline-block;
             position: absolute;
-            top: 250px;
+            top: 255px;
             left: 50px;
             border: none;
         }
@@ -218,6 +218,16 @@
             top: 62px;
             left: 50px;
             border: none;
+        }
+
+        #prices {
+            height: 30px;
+            margin-top: 60px;
+            width: 215px;
+            margin-left: 40px;
+            display: block;
+            border: solid 1px;
+
         }
     </style>
 </head>
@@ -261,10 +271,11 @@
         <h2 id="h2price">Preisspanne</h2>
         <div id="pricefilter">
             <select name="cars" id="prices">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+                <option value="default">Preisspanne wählen...</option>
+                <option value="volvo">0€ - 100€</option>
+                <option value="saab">100€ - 500€</option>
+                <option value="mercedes">500€ - 1000€</option>
+                <option value="audi">100€ - 2000€</option>
             </select>
         </div>
 
