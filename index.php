@@ -108,10 +108,10 @@
 
         #suche {
             height: 30px;
-            margin-top: 15px;
+            margin-top: 20px;
             margin-bottom: 10px;
             display: inline-block;
-            border-style: solid;
+            border: solid 1px;
 
         }
 
@@ -137,9 +137,8 @@
         #checkboxen {
             display: flex;
             flex-direction: column;
-            margin-right: 0;
             gap: 10px;
-            margin-top: 75px;
+            margin-top: 65px;
             width: 50px;
         }
 
@@ -181,7 +180,7 @@
             height: 150px;
             left: -35px;
             min-height: 150px;
-            margin-top: -150px;
+            margin-top: -190px;
             margin-left: 150px;
             float: left;
         }
