@@ -40,6 +40,7 @@
             border: solid 1px;
             height: 20px;
             border-radius: 0;
+            
 
         }
 
