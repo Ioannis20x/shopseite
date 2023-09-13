@@ -272,7 +272,7 @@
         <div id="pricefilter">
             <select name="cars" id="prices">
                 <option value="default">Preisspanne wählen...</option>
-                <option value="volvo">0€ - 100€</option>
+                <option value="volvo" value="Select * From produkte Where preis > 0 and preis > 100">0€ - 100€</option>
                 <option value="saab">100€ - 500€</option>
                 <option value="mercedes">500€ - 1000€</option>
                 <option value="audi">100€ - 2000€</option>
