@@ -26,3 +26,24 @@ function importproducts($dhandle)
     }
     fclose($file);
 }
+
+function importcategories($dhandle){
+    $i = 0;
+    $file = fopen('csv.csv', 'r');
+    while ($data = fgetcsv($file, 500, ';')) {
+
+        if ($i >= 1) {
+            $checksql = "SELECT * FROM kategorien WHERE kategorie='$data[4]'";
+            $checkres = $dhandle->query($checksql);
+            if ($checkres->num_rows > 0) {
+                echo "ACHTUNG: KATEGORIE VORHANDEN<br>";
+            } else {
+                $sql = "INSERT INTO kategorien (kategorie) VALUES ('$data[4]')";
+                dbaction($dhandle, $sql);
+            }
+        } else {
+            $i++;
+        }
+    }
+    fclose($file);
+}
