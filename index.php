@@ -292,7 +292,7 @@
         $dbname = 'shopseite';
 
         //importproducts($dbhandle);
-        importcategories($dbhandle);
+        //importcategories($dbhandle);
 
         if (isset($_GET["page"])) {
             $offset = (6 * $_GET["page"]) - 6;
