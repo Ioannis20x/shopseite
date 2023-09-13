@@ -20,7 +20,7 @@
             width: 500px;
             height: 500px;
             margin-bottom: 50px;
-            box-shadow: -1px 0px 2px grey;
+            border-left:solid 0.5px grey;
             text-align: left;
             margin-left: 10px;
         }
