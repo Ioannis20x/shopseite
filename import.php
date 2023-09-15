@@ -35,6 +35,7 @@ function importproducts($dhandle)
 
 function importcategories($dhandle)
 {
+    $katc = 0;
     $i = 0;
     $file = fopen('csv.csv', 'r');
     while ($data = fgetcsv($file, 500, ';')) {
@@ -44,6 +45,11 @@ function importcategories($dhandle)
             $checkres = $dhandle->query($checksql);
             if ($checkres->num_rows > 0) {
                 echo "<script>console.warn('ACHTUNG: KATEGORIE VORHANDEN')</script>";
+                if ($katc == $checkres->num_rows) {
+                    importproducts($dhandle);
+                } else {
+                    $katc++;
+                }
             } else {
                 $sql = "INSERT INTO kategorien (kategorie) VALUES ('$data[4]')";
                 dbaction($dhandle, $sql);
@@ -52,6 +58,5 @@ function importcategories($dhandle)
             $i++;
         }
     }
-    importproducts($dhandle);
     fclose($file);
 }
