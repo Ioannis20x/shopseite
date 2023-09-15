@@ -139,19 +139,6 @@
             border: none;
         }
 
-        input[type="checkbox"]::before {
-            content: "";
-            width: 0.65em;
-            height: 0.65em;
-            transform: scale(0);
-            transition: 120ms transform ease-in-out;
-            box-shadow: inset 1em 1em var(--form-control-color);
-        }
-
-        input[type="checkbox"]:checked::before {
-            transform: scale(1);
-        }
-
         #checkboxen {
             display: flex;
             flex-direction: column;
