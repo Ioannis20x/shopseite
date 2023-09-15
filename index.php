@@ -20,7 +20,7 @@
             width: 500px;
             height: 500px;
             margin-bottom: 50px;
-            border-left:solid 0.5px grey;
+            border-left: solid 0.5px grey;
             text-align: left;
             margin-left: 10px;
         }
@@ -123,22 +123,33 @@
         }
 
         input[type="checkbox"] {
-
             box-sizing: border-box;
             padding: 0;
             display: list-item;
             width: 1.15em;
             height: 1.15em;
             border: 0.15em solid grey;
-            border-radius: 100px;
             transform: translateY(-0.075em);
-            white-space: nowrap;
             position: absolute;
-            margin-right: 0;
+            display: grid;
+            place-content: center;
         }
 
         [type="search"] {
             border: none;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--form-control-color);
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
         }
 
         #checkboxen {
