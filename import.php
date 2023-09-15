@@ -22,7 +22,8 @@ function importproducts($dhandle)
             if ($checkres->num_rows > 0) {
                 echo "<script>console.warn('ACHTUNG: DATENSATZ VORHANDEN')</script>";
             } else {
-                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) VALUES ('$produktname','$preis','$lager','$lieferzeit','$kategorie','$dateiname')";
+                $katid = "SELECT id from kategorien WHERE kategorie = '$kategorie'";
+                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) VALUES ('$produktname','$preis','$lager','$lieferzeit','$katid','$dateiname')";
                 dbaction($dhandle, $sql);
             }
         } else {
