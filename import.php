@@ -24,6 +24,7 @@ function importproducts($dhandle)
             $i++;
         }
     }
+    importcategories($dhandle);
     fclose($file);
 }
 
