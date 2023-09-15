@@ -22,20 +22,26 @@ function importproducts($dhandle)
             if ($checkres->num_rows > 0) {
                 echo "<script>console.warn('ACHTUNG: DATENSATZ VORHANDEN')</script>";
             } else {
-                $katid = dbaction($dhandle, "SELECT id from kategorien WHERE kategorie = '$kategorie'");
-                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) VALUES ('$produktname','$preis','$lager','$lieferzeit','$katid','$dateiname')";
+                
+                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) VALUES ('$produktname','$preis','$lager','$lieferzeit','$dateiname')";
                 dbaction($dhandle, $sql);
             }
         } else {
             $i++;
         }
     }
+    $katid = "SELECT id from kategorien WHERE kategorie = '$kategorie'";
     fclose($file);
+    if ($dhandle->query($katid) === TRUE) {
+        echo "QUERY: ERFOLG! <br>";
+    } else {
+        echo "QUERY: FEHLER( " . $dhandle->error . ")<br>";
+    }
+    
 }
 
 function importcategories($dhandle)
 {
-    $katc = 0;
     $i = 0;
     $file = fopen('csv.csv', 'r');
     while ($data = fgetcsv($file, 500, ';')) {
@@ -45,11 +51,7 @@ function importcategories($dhandle)
             $checkres = $dhandle->query($checksql);
             if ($checkres->num_rows > 0) {
                 echo "<script>console.warn('ACHTUNG: KATEGORIE VORHANDEN')</script>";
-                if ($katc == $checkres->num_rows) {
-                    importproducts($dhandle);
-                } else {
-                    $katc++;
-                }
+                importproducts($dhandle);
             } else {
                 $sql = "INSERT INTO kategorien (kategorie) VALUES ('$data[4]')";
                 dbaction($dhandle, $sql);
