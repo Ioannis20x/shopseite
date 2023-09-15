@@ -10,26 +10,30 @@ function importproducts($dhandle)
     $i = 0;
     $file = fopen('csv.csv', 'r');
     while ($data = fgetcsv($file, 500, ';')) {
-
+        $produktname = $data[0];
+        $preis = $data[1];
+        $lager = $data[2];
+        $lieferzeit = $data[3];
+        $kategorie = $data[4];
+        $dateiname = $data[5];
         if ($i >= 1) {
             $checksql = "SELECT * FROM Produkte WHERE produkt='$data[0]'";
             $checkres = $dhandle->query($checksql);
             if ($checkres->num_rows > 0) {
                 echo "<script>console.warn('ACHTUNG: DATENSATZ VORHANDEN')</script>";
-                
             } else {
-                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) VALUES ('$data[0]','$data[1]','$data[2]','$data[3]','$data[4]','$data[5]')";
+                $sql = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) VALUES ('$produktname','$preis','$lager','$lieferzeit','$kategorie','$dateiname')";
                 dbaction($dhandle, $sql);
             }
         } else {
             $i++;
         }
     }
-    importcategories($dhandle);
     fclose($file);
 }
 
-function importcategories($dhandle){
+function importcategories($dhandle)
+{
     $i = 0;
     $file = fopen('csv.csv', 'r');
     while ($data = fgetcsv($file, 500, ';')) {
@@ -47,5 +51,6 @@ function importcategories($dhandle){
             $i++;
         }
     }
+    importproducts($dhandle);
     fclose($file);
 }
