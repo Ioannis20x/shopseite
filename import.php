@@ -75,7 +75,7 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
         $lieferzeit = $data[3];
         $kategorie = $data[4];
         $dateiname = $data[5];
-        
+
         // Überprüfen, ob die Kategorie bereits existent
         $katid = 0;
         $katquery = "SELECT id FROM kategorien WHERE kategorie = '$kategorie'";
@@ -89,18 +89,20 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $dbhandle->query($insert_katquery);
             $katid = $dbhandle->insert_id;
         }
-        
+
         // Produkt in die Datenbank einfügen
-        $prodquery = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) 
-            VALUES ('$produkt', '$preis', $lager, $lieferzeit, '$kategorie','$dateiname')";
-        $dbhandle->query($prodquery);
-        
-        // Verknüpfung zwischen Produkt und Kategorie 
-        $prodkatquery = "INSERT INTO mapping (produktid, kategorieid) 
+        $existprob = "SELECT * FROM produkte WHERE Produkt= " . $produktname;
+        $existres = $dbhandle->query($existprob);
+        if ($existres->num_rows == 1) {
+            // Verknüpfung zwischen Produkt und Kategorie 
+            $prodkatquery = "INSERT INTO mapping (produktid, kategorieid) 
             VALUES (" . $dbhandle->insert_id . ", $katid)";
-        $dbhandle->query($prodkatquery);
+            $dbhandle->query($prodkatquery);
+        } else {
+            $prodquery = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) 
+            VALUES ('$produkt', '$preis', $lager, $lieferzeit, '$kategorie','$dateiname')";
+            $dbhandle->query($prodquery);
+        }
     }
     fclose($handle);
 }
-
-?>
