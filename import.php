@@ -104,5 +104,3 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
 }
 
 ?>
-
-
