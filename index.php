@@ -289,10 +289,9 @@
         $password = '';
         $dbname = 'shopseite';
 
-        importcategories($dbhandle);
 
         if (isset($_GET["page"])) {
-            $offset = (6 * $_GET["page"]) - 6;
+            $offset = (6 * $_GET["page"]) - 5;
             if (isset($_GET["kategorie"])) {
                 if ($_GET["page"] == 1) {
                     $sql = "SELECT * FROM produkte WHERE kategorie= " . $_GET['kategorie'] . " LIMIT 6 OFFSET 0";
