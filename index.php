@@ -281,7 +281,7 @@
     <div class="grid-container">
         <?php
         include "db.php";
-        include "import.php";
+        include_once "import.php";
 
         // Verbindungsdaten zur Datenbank
         $servername = 'localhost';
@@ -291,7 +291,7 @@
 
 
         if (isset($_GET["page"])) {
-            $offset = (6 * $_GET["page"]) - 5;
+            $offset = (6 * $_GET["page"]) - 6;
             if (isset($_GET["kategorie"])) {
                 if ($_GET["page"] == 1) {
                     $sql = "SELECT * FROM produkte WHERE kategorie= " . $_GET['kategorie'] . " LIMIT 6 OFFSET 0";
@@ -303,11 +303,13 @@
             } else {
                 //echo $offset;
                 $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
+
             }
             $result = $dbhandle->query($sql);
         } else {
             $sql = "SELECT * FROM produkte LIMIT 6 OFFSET 0";
             $result = $dbhandle->query($sql);
+
         }
 
         if ($result->num_rows > 0) {
