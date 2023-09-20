@@ -1,5 +1,7 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require_once "db.php";
 
 // Datenbankverbindung herstellen
@@ -54,15 +56,24 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $conn->query($inskatquery);
             $katid = $conn->insert_id;
         }
-
+/*
         // Verknüpfung zwischen Produkt und Kategorie herstellen
         $checklinkq = "SELECT * FROM mapping WHERE prodid = $prodid AND katid = $katid";
         $checklinkres = $conn->query($checklinkq);
 
-        if ($checklinkres == true && $checklinkres->num_rows == 0) {
+        if ($checklinkres  !== TRUE && $checklinkres->num_rows == 0) {
             $insprodkat = "INSERT INTO mapping (produktid, kategorieid) 
                 VALUES ($prodid, $katid)";
             $conn->query($insprodkat);
+        }*/
+
+        $checklinkq = "SELECT * FROM mapping WHERE prodid = $prodid AND katid = $katid";
+        $checklinkres = $conn->query($checklinkq);
+        
+        if ($checklinkres->num_rows == 0) {
+            $insert_product_category_query = "INSERT INTO mapping (produktid, kategorieid) 
+                VALUES ($prodid, $katid)";
+            $conn->query($insert_product_category_query);
         }
     }
     fclose($handle);
@@ -71,4 +82,3 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
 }
 
 $conn->close();
-?>
