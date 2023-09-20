@@ -292,24 +292,27 @@
 
         if (isset($_GET["page"])) {
             $offset = (6 * $_GET["page"]) - 6;
-            if (isset($_GET["kategorie"])) {
-                if ($_GET["page"] == 1) {
-                    $sql = "SELECT * FROM produkte WHERE kategorie= " . $_GET['kategorie'] . " LIMIT 6 OFFSET 0";
-                    $result = $dbhandle->query($sql);
-                } else if ($_GET["page"] > 1) {
-                }
-                $sql = "SELECT * FROM produkte WHERE kategorie= " . $_GET['kategorie'] . " LIMIT 6 OFFSET" . $offset . "";
-                $result = $dbhandle->query($sql);
-            } else {
-                //echo $offset;
-                $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
-
+            if ($_GET["page"] > 1) {
             }
+            $sql = "SELECT * FROM produkte WHERE kategorie= " . $_GET['kategorie'] . " LIMIT 6 OFFSET" . $offset . "";
             $result = $dbhandle->query($sql);
         } else {
-            $sql = "SELECT * FROM produkte LIMIT 6 OFFSET 0";
+            //echo $offset;
+            $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
             $result = $dbhandle->query($sql);
+        }
 
+
+
+
+        if (isset($_GET["min"])) {
+            if (isset($_GET["kategorie"])) {
+                //Code für min und kategorie
+            } else if (isset($_GET["max"])) {
+                //Code für min und max
+            } else {
+                
+            }
         }
 
         if ($result->num_rows > 0) {
