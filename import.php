@@ -36,8 +36,8 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $prodid = $row["id"];
         } else {
             // Produkt in DB einfügen
-            $insprodquery = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, kategorie, dateiname) 
-                VALUES ('$produkt', '$preis', $lager, $lieferzeit, '$kategorie', '$dateiname')";
+            $insprodquery = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, dateiname) 
+                VALUES ('$produkt', '$preis', $lager, $lieferzeit, '$dateiname')";
             $conn->query($insprodquery);
             $prodid = $conn->insert_id;
         }
@@ -52,7 +52,7 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $row = $katres->fetch_assoc();
             $katid = $row["id"];
         } else {
-            // Kategorie anlegen, wenn sie nicht existiert
+            // Kategorie anlegen
             $inskat = "INSERT INTO kategorien (kategorie) VALUES ('$kategorie')";
             $conn->query($insert_category_query);
             $katid = $conn->insert_id;
