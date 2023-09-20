@@ -47,34 +47,27 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
         $katquery = "SELECT id FROM kategorien WHERE kategorie = '$kategorie'";
         $katres = $conn->query($katquery);
 
-        if ($katres!== false && $katres->num_rows > 0) {
+
+        if ($katres->num_rows > 0) {
             $row = $katres->fetch_assoc();
             $katid = $row["id"];
         } else {
-            // Kategorie in DB einfügen
-            $inskatquery = "INSERT INTO kategorien (kategorie) VALUES ('$kategorie')";
-            $conn->query($inskatquery);
+            // Kategorie anlegen, wenn sie nicht existiert
+            $inskat = "INSERT INTO kategorien (kategorie) VALUES ('$kategorie')";
+            $conn->query($insert_category_query);
             $katid = $conn->insert_id;
         }
-/*
+        
         // Verknüpfung zwischen Produkt und Kategorie herstellen
         $checklinkq = "SELECT * FROM mapping WHERE prodid = $prodid AND katid = $katid";
         $checklinkres = $conn->query($checklinkq);
-
-        if ($checklinkres  !== TRUE && $checklinkres->num_rows == 0) {
+        var_dump($checklinkres);
+/*
+        if ($checklinkres  !== TRUE) {
             $insprodkat = "INSERT INTO mapping (produktid, kategorieid) 
                 VALUES ($prodid, $katid)";
             $conn->query($insprodkat);
         }*/
-
-        $checklinkq = "SELECT * FROM mapping WHERE prodid = $prodid AND katid = $katid";
-        $checklinkres = $conn->query($checklinkq);
-        
-        if ($checklinkres->num_rows == 0) {
-            $insert_product_category_query = "INSERT INTO mapping (produktid, kategorieid) 
-                VALUES ($prodid, $katid)";
-            $conn->query($insert_product_category_query);
-        }
     }
     fclose($handle);
 } else {
