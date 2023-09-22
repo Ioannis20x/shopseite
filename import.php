@@ -57,17 +57,19 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $conn->query($insert_category_query);
             $katid = $conn->insert_id;
         }
-        
+
         // Verknüpfung zwischen Produkt und Kategorie herstellen
-        $checklinkq = "SELECT * FROM mapping WHERE prodid = $prodid AND katid = $katid";
+        $checklinkq = "SELECT * FROM mapping WHERE prodid = '$prodid' AND katid = '$katid'";
         $checklinkres = $conn->query($checklinkq);
         var_dump($checklinkres);
-/*
-        if ($checklinkres  !== TRUE) {
+        if(!$checklinkres){
+            die("Fehler in der Abfrage: " . $conn->error);
+        }
+        if ($checklinkres && $checklinkres->num_rows > 0) {
             $insprodkat = "INSERT INTO mapping (produktid, kategorieid) 
                 VALUES ($prodid, $katid)";
             $conn->query($insprodkat);
-        }*/
+        }
     }
     fclose($handle);
 } else {
