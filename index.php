@@ -311,18 +311,16 @@
             $result = $dbhandle->query($sql);
         }
 
-        //echo $_POST["prices"];
 
-
-        if (isset($_GET["min"])) {
-            if (isset($_GET["kategorie"])) {
-                //Code für min und kategorie
-            } else if (isset($_GET["max"])) {
-                //Code für min und max
-            } else {
-            }
+        if (isset($_GET["kategorie"])) {
+            $sql = "SELECT produktid FROM mapping WHERE kategorieid = $_GET[kategorie]";
+            $result = $dbhandle->query($sql);
+            $kat = mysqli_fetch_assoc($result);
+            print_r($result);
         }
 
+
+        /*
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $preis = number_format($row["preis"], 2, ',', '.');
@@ -342,7 +340,7 @@
         } else {
             echo "Keine Daten gefunden.";
         }
-
+*/
         ?>
     </div>
 
