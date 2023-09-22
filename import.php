@@ -35,7 +35,10 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $row = $prodres->fetch_assoc();
             $prodid = $row["id"];
         } else {
-            //$preis = (float)$preis;
+
+            $preis = str_replace('.', '', $preis);
+            $preis = str_replace(',', '.', $preis);
+            $preis = (float)$preis;
             //$preis = number_format($preis, 2, ',', '.');
             // Produkt in DB einfügen
             $insprodquery = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, dateiname) 
@@ -63,13 +66,13 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
         // Verknüpfung zwischen Produkt und Kategorie herstellen
         $checklinkq = "SELECT * FROM mapping WHERE produktid = '$prodid' AND kategorieid = '$katid'";
         $checklinkres = $conn->query($checklinkq);
-        if(!$checklinkres){
+        if (!$checklinkres) {
             die("Fehler in der Abfrage: " . $conn->error);
         }
         if ($checklinkres && $checklinkres->num_rows == 0) {
             $insprodkat = "INSERT INTO mapping (produktid, kategorieid) 
                 VALUES ($prodid, $katid)";
-            dbaction($conn,$insprodkat);
+            dbaction($conn, $insprodkat);
         }
     }
     fclose($handle);
