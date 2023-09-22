@@ -35,6 +35,8 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $row = $prodres->fetch_assoc();
             $prodid = $row["id"];
         } else {
+            //$preis = (float)$preis;
+            //$preis = number_format($preis, 2, ',', '.');
             // Produkt in DB einfügen
             $insprodquery = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, dateiname) 
                 VALUES ('$produkt', '$preis', $lager, $lieferzeit, '$dateiname')";
