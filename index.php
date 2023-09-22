@@ -268,13 +268,17 @@
         </div>
         <h2 id="h2price">Preisspanne</h2>
         <div id="pricefilter">
-            <select name="cars" id="prices">
-                <option value="default">Preisspanne wählen...</option>
-                <option value="volvo" value="Select * From produkte Where preis > 0 and preis > 100">0€ - 100€</option>
-                <option value="saab">100€ - 500€</option>
-                <option value="mercedes">500€ - 1000€</option>
-                <option value="audi">100€ - 2000€</option>
-            </select>
+            <form action="" method="post">
+                <select name="prices" id="prices">
+                    <option value="default" selected>Preisspanne wählen...</option>
+                    <option value="100" value="Select * From produkte Where preis > 0 and preis > 100">0€ - 100€</option>
+                    <option value="500">100€ - 500€</option>
+                    <option value="1000">500€ - 1000€</option>
+                    <option value="2000">100€ - 2000€</option>
+                </select>
+                <input type="submit" value="Preisspanne wählen...">
+            </form>
+
         </div>
     </div>
 
@@ -307,7 +311,7 @@
             $result = $dbhandle->query($sql);
         }
 
-
+        //echo $_POST["prices"];
 
 
         if (isset($_GET["min"])) {

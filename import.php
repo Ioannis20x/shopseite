@@ -59,7 +59,7 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
         } else {
             // Kategorie anlegen
             $inskat = "INSERT INTO kategorien (kategorie) VALUES ('$kategorie')";
-            $conn->query($insert_category_query);
+            $conn->query($inskat);
             $katid = $conn->insert_id;
         }
 
