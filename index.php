@@ -313,14 +313,14 @@
 
 
         if (isset($_GET["kategorie"])) {
-            $sql = "SELECT produktid FROM mapping WHERE kategorieid = $_GET[kategorie]";
+            $sql = "SELECT * FROM produkte WHERE id =1";
             $result = $dbhandle->query($sql);
             $kat = mysqli_fetch_assoc($result);
             print_r($result);
         }
 
 
-        /*
+        
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $preis = number_format($row["preis"], 2, ',', '.');
@@ -340,7 +340,7 @@
         } else {
             echo "Keine Daten gefunden.";
         }
-*/
+
         ?>
     </div>
 
