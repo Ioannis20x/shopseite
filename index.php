@@ -345,26 +345,28 @@
         }
 
 
-
-        if ($result && $result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $preis = number_format($row["preis"], 2, ',', '.');
-                echo "<div class='grid-item'>";
-                echo "<h1 class='prodname'>";
-                echo $row["produkt"];
-                echo "</h1>";
-                echo "<h2 class='price'>$preis €</h2>";
-                if ($row["lager"] == 0) {
-                    echo "<h1 id='sold'>AUSVERKAUFT</h1>";
-                    echo '<img class="grau" src="' . './alle_produkte/' . $row["dateiname"] . '">';
-                } else {
-                    echo '<img draggable="false" src="' . './alle_produkte/' . $row["dateiname"] . '">';
-                }
-                echo "</div>";
+if(!isset($_GET["suchbegriff"])){
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $preis = number_format($row["preis"], 2, ',', '.');
+            echo "<div class='grid-item'>";
+            echo "<h1 class='prodname'>";
+            echo $row["produkt"];
+            echo "</h1>";
+            echo "<h2 class='price'>$preis €</h2>";
+            if ($row["lager"] == 0) {
+                echo "<h1 id='sold'>AUSVERKAUFT</h1>";
+                echo '<img class="grau" src="' . './alle_produkte/' . $row["dateiname"] . '">';
+            } else {
+                echo '<img draggable="false" src="' . './alle_produkte/' . $row["dateiname"] . '">';
             }
-        } else {
-            echo "Keine Daten gefunden.";
+            echo "</div>";
         }
+    } else {
+        echo "Keine Daten gefunden.";
+    }
+
+}
 
         ?>
     </div>
