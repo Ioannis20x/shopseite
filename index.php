@@ -256,10 +256,12 @@
 
     <div id="filter">
         <div id="suche">
-            <input type="search" name="suchen" id="suchleiste" placeholder="Suchen...">
-            <button type="submit">
-                <span class="material-symbols-outlined">search</span>
-            </button>
+            <form action="" method="GET" action="suche.php">
+                <input type="search" name="suchbegriff" id="suchleiste" placeholder="Suchen...">
+                <button type="submit">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+            </form>
         </div>
         <h2 id="h2kat">Kategorien</h2>
 
@@ -308,6 +310,7 @@
         <?php
         include "db.php";
         include_once "import.php";
+        include_once "suche.php";
 
         // Verbindungsdaten zur Datenbank
         $servername = 'localhost';
