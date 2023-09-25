@@ -123,16 +123,38 @@
         }
 
         input[type="checkbox"] {
+            appearance: none;
             box-sizing: border-box;
             padding: 0;
             display: list-item;
             width: 1.15em;
             height: 1.15em;
-            border: 0.15em solid grey;
-            transform: translateY(-0.075em);
             position: absolute;
             display: grid;
             place-content: center;
+            font: inherit;
+            color: currentColor;
+            border: 0.1em solid gray;
+            border-radius: 0.15em;
+            transform: translateY(-0.075em);
+            place-content: center;
+            content: "";
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.55em;
+            transform: scale(0);
+            content: "";
+            border: 0.1em solid white;
+            background-color: #AFD96F;
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--form-control-color);
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
         }
 
         [type="search"] {
@@ -320,7 +342,7 @@
         }
 
 
-        
+
         if ($result && $result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $preis = number_format($row["preis"], 2, ',', '.');
