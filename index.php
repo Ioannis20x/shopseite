@@ -134,8 +134,8 @@
             place-content: center;
             font: inherit;
             color: currentColor;
-            border: 0.1em solid gray;
-            border-radius: 0.15em;
+            border: 0.1em solid grey;
+            border-radius: 0;
             transform: translateY(-0.075em);
             place-content: center;
             content: "";
@@ -266,12 +266,14 @@
         <h2 id="h2kat">Kategorien</h2>
 
         <div id="checkboxen">
+
             <div class="kategorie">
                 <input type="checkbox" name="handys" id="handycb" class="checkbox">
             </div>
 
             <div class="kategorie">
                 <input type="checkbox" name="handys" id="huaweicb" class="checkbox">
+
             </div>
             <div class="kategorie">
                 <input type="checkbox" name="handys" id="laptopcb" class="checkbox">
@@ -345,28 +347,27 @@
         }
 
 
-if(!isset($_GET["suchbegriff"])){
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $preis = number_format($row["preis"], 2, ',', '.');
-            echo "<div class='grid-item'>";
-            echo "<h1 class='prodname'>";
-            echo $row["produkt"];
-            echo "</h1>";
-            echo "<h2 class='price'>$preis €</h2>";
-            if ($row["lager"] == 0) {
-                echo "<h1 id='sold'>AUSVERKAUFT</h1>";
-                echo '<img class="grau" src="' . './alle_produkte/' . $row["dateiname"] . '">';
+        if (!isset($_GET["suchbegriff"])) {
+            if ($result && $result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $preis = number_format($row["preis"], 2, ',', '.');
+                    echo "<div class='grid-item'>";
+                    echo "<h1 class='prodname'>";
+                    echo $row["produkt"];
+                    echo "</h1>";
+                    echo "<h2 class='price'>$preis €</h2>";
+                    if ($row["lager"] == 0) {
+                        echo "<h1 id='sold'>AUSVERKAUFT</h1>";
+                        echo '<img class="grau" src="' . './alle_produkte/' . $row["dateiname"] . '">';
+                    } else {
+                        echo '<img draggable="false" src="' . './alle_produkte/' . $row["dateiname"] . '">';
+                    }
+                    echo "</div>";
+                }
             } else {
-                echo '<img draggable="false" src="' . './alle_produkte/' . $row["dateiname"] . '">';
+                echo "Keine Daten gefunden.";
             }
-            echo "</div>";
         }
-    } else {
-        echo "Keine Daten gefunden.";
-    }
-
-}
 
         ?>
     </div>
@@ -377,6 +378,74 @@ if(!isset($_GET["suchbegriff"])){
         <a href="http://localhost/shop/?page=3"><button class="pagebtn">3</button></a>
         <a href="http://localhost/shop/?page=4"><button class="pagebtn">4</button></a>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var handycb = document.getElementById("handycb");
+            var huaweicb = document.getElementById("huaweicb");
+            var laptopcb = document.getElementById("laptopcb");
+            var monitorcb = document.getElementById("monitorcb");
+            var sonstcb = document.getElementById("sonstcb");
+
+            // Überprüfen, ob die Checkboxen im localStorage gespeichert sind und den Haken entsprechend setzen
+            if (localStorage.getItem("handycb") === "true") {
+                handycb.checked = true;
+            }
+            if (localStorage.getItem("huaweicb") === "true") {
+                huaweicb.checked = true;
+            }
+            if (localStorage.getItem("laptopcb") === "true") {
+                laptopcb.checked = true;
+            }
+            if (localStorage.getItem("monitorcb") === "true") {
+                monitorcb.checked = true;
+            }
+            if (localStorage.getItem("sonstcb") === "true") {
+                sonstcb.checked = true;
+            }
+
+            // HANDY
+            handycb.addEventListener("change", function() {
+                localStorage.setItem("handycb", handycb.checked);
+                if (handycb.checked) {
+                    window.location.replace(window.location.href + "?kategorie=handys");
+                }
+            });
+
+            // HUAWEI
+            huaweicb.addEventListener("change", function() {
+                localStorage.setItem("huaweicb", huaweicb.checked);
+                if (huaweicb.checked) {
+                    window.location.replace(window.location.href + "?kategorie=huawei");
+                }
+            });
+
+            // LAPTOP
+            laptopcb.addEventListener("change", function() {
+                localStorage.setItem("laptopcb", laptopcb.checked);
+                if (laptopcb.checked) {
+                    window.location.replace(window.location.href + "?kategorie=laptop");
+                }
+            });
+
+            // MONITOR
+            monitorcb.addEventListener("change", function() {
+                localStorage.setItem("monitorcb", monitorcb.checked);
+                if (monitorcb.checked) {
+                    window.location.replace(window.location.href + "?kategorie=monitor");
+                }
+            });
+
+            // SONST
+            sonstcb.addEventListener("change", function() {
+                localStorage.setItem("sonstcb", sonstcb.checked);
+                if (sonstcb.checked) {
+                    window.location.replace(window.location.href + "?kategorie=sonstiges");
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
