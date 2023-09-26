@@ -9,247 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <style>
-        .grid-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .grid-item {
-            width: 500px;
-            height: 500px;
-            margin-bottom: 50px;
-            border-left: solid 0.5px grey;
-            text-align: left;
-            margin-left: 10px;
-        }
-
-        img {
-            width: 375px;
-            height: 360px;
-        }
-
-        #seiten {
-            margin: 50px auto auto auto;
-            width: 50%;
-            text-align: center;
-        }
-
-        .pagebtn {
-            border: solid 1px;
-            height: 20px;
-            border-radius: 0;
-        }
-
-        .pagebtn:hover {
-            cursor: pointer;
-        }
-
-        #sold {
-            display: block;
-            margin-left: 45px;
-            color: #DF2727;
-        }
-
-        .grau {
-            -webkit-filter: grayscale(100%);
-            -moz-filter: grayscale(100%);
-            -ms-filter: grayscale(100%);
-            -o-filter: grayscale(100%);
-            filter: grayscale(100%);
-            width: 350px;
-            height: 325px;
-        }
-
-        h1 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 25px;
-            font-weight: 400;
-            color: #505050;
-            line-height: 30px;
-        }
-
-        h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: #AFD96F;
-            line-height: 24px;
-        }
-
-        .prodname {
-            display: block;
-            margin-left: 45px;
-        }
-
-        .price {
-            display: block;
-            margin-top: -15px;
-            margin-left: 45px;
-        }
-
-        html,
-        body {
-            height: 100%;
-        }
-
-        #filter {
-            float: left;
-            width: 300px;
-            min-height: 100%;
-            height: auto !important;
-            height: 100%;
-            display: block;
-            text-align: center;
-            box-shadow: rgba(0, 0, 0, 0.15) 3.95px 0px 6px;
-            align-content: center;
-        }
-
-        ::placeholder {
-            padding-top: 10px;
-            padding-left: 20px;
-            padding-bottom: 10px;
-        }
-
-        #suche {
-            height: 30px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            margin-left: -10px;
-            display: inline-block;
-            border: solid 1px;
-
-        }
-
-        input[type="checkbox"] {
-            appearance: none;
-            box-sizing: border-box;
-            padding: 0;
-            display: list-item;
-            width: 1.15em;
-            height: 1.15em;
-            position: absolute;
-            display: grid;
-            place-content: center;
-            font: inherit;
-            color: currentColor;
-            border: 0.1em solid grey;
-            border-radius: 0;
-            transform: translateY(-0.075em);
-            place-content: center;
-            content: "";
-        }
-
-        input[type="checkbox"]::before {
-            content: "";
-            width: 0.65em;
-            height: 0.55em;
-            transform: scale(0);
-            content: "";
-            border: 0.1em solid white;
-            background-color: #AFD96F;
-            transition: 120ms transform ease-in-out;
-            box-shadow: inset 1em 1em var(--form-control-color);
-        }
-
-        input[type="checkbox"]:checked::before {
-            transform: scale(1);
-        }
-
-        [type="search"] {
-            border: none;
-        }
-
-        #checkboxen {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-left: 40px;
-            margin-top: 35px;
-            width: 50px;
-        }
-
-        .kategorie {
-            margin-bottom: 20px;
-            width: 20px;
-
-        }
-
-        #suchleiste {
-            height: inherit;
-            position: relative;
-            top: -6px;
-            left: -0px;
-            display: inline-block;
-        }
-
-        input:focus {
-            outline: none;
-        }
-
-        button[type="submit"]:hover {
-            background-color: gray;
-        }
-
-        button[type="submit"] {
-            display: inline-block;
-            height: inherit;
-            background: none;
-            border-width: 0;
-            border-style: none;
-            outline: none;
-        }
-
-        #kategorien {
-            position: relative;
-            width: 60px;
-            height: auto !important;
-            height: 150px;
-            left: -35px;
-            min-height: 150px;
-            margin-top: -149px;
-            margin-left: 100px;
-            float: left;
-        }
-
-
-        label {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
-            font-weight: 400;
-            color: #505050;
-            line-height: 19px;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        #h2price {
-            display: inline-block;
-            position: absolute;
-            top: 255px;
-            left: 50px;
-            border: none;
-        }
-
-        #h2kat {
-            display: inline-block;
-            position: absolute;
-            top: 62px;
-            left: 50px;
-            border: none;
-        }
-
-        #prices {
-            height: 30px;
-            margin-top: 60px;
-            width: 215px;
-            margin-left: 40px;
-            display: block;
-            border: solid 1px;
-
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -343,7 +103,7 @@
             $sql = "SELECT * FROM produkte WHERE id =1";
             $result = $dbhandle->query($sql);
             $kat = mysqli_fetch_assoc($result);
-            print_r($result);
+            print_r($kat);
         }
 
 
@@ -370,7 +130,7 @@
         }
 
         ?>
-    </div>
+    </div>  f
 
     <div id="seiten">
         <a href="http://localhost/shop/?page=1"><button class="pagebtn">1</button></a>
@@ -386,29 +146,48 @@
             var laptopcb = document.getElementById("laptopcb");
             var monitorcb = document.getElementById("monitorcb");
             var sonstcb = document.getElementById("sonstcb");
+            window.onload = () => {
+                // Überprüfen, ob die Checkboxen im sessionStorage gespeichert sind und den Haken entsprechend setzen
+                if (sessionStorage.getItem("handycb") === "true") {
+                    handycb.checked = true;
+                }
+                if (sessionStorage.getItem("huaweicb") === "true") {
+                    huaweicb.checked = true;
+                }
+                if (sessionStorage.getItem("laptopcb") === "true") {
+                    laptopcb.checked = true;
+                }
+                if (sessionStorage.getItem("monitorcb") === "true") {
+                    monitorcb.checked = true;
+                }
+                if (sessionStorage.getItem("sonstcb") === "true") {
+                    sonstcb.checked = true;
+                }
+            }
 
-            // Überprüfen, ob die Checkboxen im sessionStorage gespeichert sind und den Haken entsprechend setzen
-            if (sessionStorage.getItem("handycb") === "true") {
-                handycb.checked = true;
-            }
-            if (sessionStorage.getItem("huaweicb") === "true") {
-                huaweicb.checked = true;
-            }
-            if (sessionStorage.getItem("laptopcb") === "true") {
-                laptopcb.checked = true;
-            }
-            if (sessionStorage.getItem("monitorcb") === "true") {
-                monitorcb.checked = true;
-            }
-            if (sessionStorage.getItem("sonstcb") === "true") {
-                sonstcb.checked = true;
-            }
+            var link = "http://localhost/shop"
 
+            function uncheckall() {
+                handycb.checked = false;
+                sessionStorage.setItem("handycb", false);
+                huaweicb.checked = false;
+                sessionStorage.setItem("huawei", false);
+                laptopcb.checked = false;
+                sessionStorage.setItem("laptopcb", false);
+                monitorcb.checked = false;
+                sessionStorage.setItem("monitorcb", false);
+                sonstcb.checked = false;
+                sessionStorage.setItem("sonstcb", false);
+                window.location.replace("http://localhost/shop");
+            }
             // HANDY
             handycb.addEventListener("change", function() {
                 sessionStorage.setItem("handycb", handycb.checked);
                 if (handycb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=handys");
+                    window.location.replace(link + "?kategorie=handys");
+                } else {
+                    uncheckall();
+                    
                 }
             });
 
@@ -416,7 +195,9 @@
             huaweicb.addEventListener("change", function() {
                 sessionStorage.setItem("huaweicb", huaweicb.checked);
                 if (huaweicb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=huawei");
+                    window.location.replace(link + "?kategorie=huawei");
+                } else {
+                    window.location.replace("http://localhost/shop");
                 }
             });
 
@@ -424,7 +205,9 @@
             laptopcb.addEventListener("change", function() {
                 sessionStorage.setItem("laptopcb", laptopcb.checked);
                 if (laptopcb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=laptop");
+                    window.location.replace(link + "?kategorie=laptop");
+                } else {
+                    window.location.replace("http://localhost/shop");
                 }
             });
 
@@ -432,7 +215,9 @@
             monitorcb.addEventListener("change", function() {
                 sessionStorage.setItem("monitorcb", monitorcb.checked);
                 if (monitorcb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=monitor");
+                    window.location.replace(link + "?kategorie=monitor");
+                } else {
+                    window.location.replace("http://localhost/shop");
                 }
             });
 
@@ -440,7 +225,9 @@
             sonstcb.addEventListener("change", function() {
                 sessionStorage.setItem("sonstcb", sonstcb.checked);
                 if (sonstcb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=sonstiges");
+                    window.location.replace(link + "?kategorie=sonstiges");
+                } else {
+                    window.location.replace("http://localhost/shop");
                 }
             });
         });
