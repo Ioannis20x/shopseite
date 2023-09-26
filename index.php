@@ -130,7 +130,7 @@
         }
 
         ?>
-    </div>  f
+    </div>
 
     <div id="seiten">
         <a href="http://localhost/shop/?page=1"><button class="pagebtn">1</button></a>
@@ -139,100 +139,25 @@
         <a href="http://localhost/shop/?page=4"><button class="pagebtn">4</button></a>
     </div>
 
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var handycb = document.getElementById("handycb");
-            var huaweicb = document.getElementById("huaweicb");
-            var laptopcb = document.getElementById("laptopcb");
-            var monitorcb = document.getElementById("monitorcb");
-            var sonstcb = document.getElementById("sonstcb");
-            window.onload = () => {
-                // Überprüfen, ob die Checkboxen im sessionStorage gespeichert sind und den Haken entsprechend setzen
-                if (sessionStorage.getItem("handycb") === "true") {
-                    handycb.checked = true;
-                }
-                if (sessionStorage.getItem("huaweicb") === "true") {
-                    huaweicb.checked = true;
-                }
-                if (sessionStorage.getItem("laptopcb") === "true") {
-                    laptopcb.checked = true;
-                }
-                if (sessionStorage.getItem("monitorcb") === "true") {
-                    monitorcb.checked = true;
-                }
-                if (sessionStorage.getItem("sonstcb") === "true") {
-                    sonstcb.checked = true;
-                }
-            }
+        // Alle Checkboxen auswählen
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
-            var link = "http://localhost/shop"
-
-            function uncheckall() {
-                handycb.checked = false;
-                sessionStorage.setItem("handycb", false);
-                huaweicb.checked = false;
-                sessionStorage.setItem("huaweicb", false);
-                laptopcb.checked = false;
-                sessionStorage.setItem("laptopcb", false);
-                monitorcb.checked = false;
-                sessionStorage.setItem("monitorcb", false);
-                sonstcb.checked = false;
-                sessionStorage.setItem("sonstcb", false);
-                window.location.replace("http://localhost/shop");
-            }
-            // HANDY
-            handycb.addEventListener("change", function() {
-                sessionStorage.setItem("handycb", handycb.checked);
-                if (handycb.checked) {
-                    window.location.replace(link + "?kategorie=handys");
-                } else {
-                    uncheckall();
-                    
-                }
-            });
-
-            // HUAWEI
-            huaweicb.addEventListener("change", function() {
-                sessionStorage.setItem("huaweicb", huaweicb.checked);
-                if (huaweicb.checked) {
-                    window.location.replace(link + "?kategorie=huawei");
-                } else {
-                    window.location.replace("http://localhost/shop");
-                }
-            });
-
-            // LAPTOP
-            laptopcb.addEventListener("change", function() {
-                sessionStorage.setItem("laptopcb", laptopcb.checked);
-                if (laptopcb.checked) {
-                    window.location.replace(link + "?kategorie=laptop");
-                } else {
-                    window.location.replace("http://localhost/shop");
-                }
-            });
-
-            // MONITOR
-            monitorcb.addEventListener("change", function() {
-                sessionStorage.setItem("monitorcb", monitorcb.checked);
-                if (monitorcb.checked) {
-                    window.location.replace(link + "?kategorie=monitor");
-                } else {
-                    window.location.replace("http://localhost/shop");
-                }
-            });
-
-            // SONST
-            sonstcb.addEventListener("change", function() {
-                sessionStorage.setItem("sonstcb", sonstcb.checked);
-                if (sonstcb.checked) {
-                    window.location.replace(link + "?kategorie=sonstiges");
-                } else {
-                    window.location.replace("http://localhost/shop");
+        // Event-Listener für jede Checkbox hinzufügen
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Wenn eine Checkbox aktiviert wird, deaktiviere alle anderen
+                if (this.checked) {
+                    checkboxes.forEach(otherCheckbox => {
+                        if (otherCheckbox !== this) {
+                            otherCheckbox.checked = false;
+                        }
+                    });
                 }
             });
         });
     </script>
-
 </body>
 
 </html>
