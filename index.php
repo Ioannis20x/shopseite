@@ -171,7 +171,7 @@
                 handycb.checked = false;
                 sessionStorage.setItem("handycb", false);
                 huaweicb.checked = false;
-                sessionStorage.setItem("huawei", false);
+                sessionStorage.setItem("huaweicb", false);
                 laptopcb.checked = false;
                 sessionStorage.setItem("laptopcb", false);
                 monitorcb.checked = false;
