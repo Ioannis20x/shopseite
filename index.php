@@ -387,26 +387,26 @@
             var monitorcb = document.getElementById("monitorcb");
             var sonstcb = document.getElementById("sonstcb");
 
-            // Überprüfen, ob die Checkboxen im localStorage gespeichert sind und den Haken entsprechend setzen
-            if (localStorage.getItem("handycb") === "true") {
+            // Überprüfen, ob die Checkboxen im sessionStorage gespeichert sind und den Haken entsprechend setzen
+            if (sessionStorage.getItem("handycb") === "true") {
                 handycb.checked = true;
             }
-            if (localStorage.getItem("huaweicb") === "true") {
+            if (sessionStorage.getItem("huaweicb") === "true") {
                 huaweicb.checked = true;
             }
-            if (localStorage.getItem("laptopcb") === "true") {
+            if (sessionStorage.getItem("laptopcb") === "true") {
                 laptopcb.checked = true;
             }
-            if (localStorage.getItem("monitorcb") === "true") {
+            if (sessionStorage.getItem("monitorcb") === "true") {
                 monitorcb.checked = true;
             }
-            if (localStorage.getItem("sonstcb") === "true") {
+            if (sessionStorage.getItem("sonstcb") === "true") {
                 sonstcb.checked = true;
             }
 
             // HANDY
             handycb.addEventListener("change", function() {
-                localStorage.setItem("handycb", handycb.checked);
+                sessionStorage.setItem("handycb", handycb.checked);
                 if (handycb.checked) {
                     window.location.replace(window.location.href + "?kategorie=handys");
                 }
@@ -414,7 +414,7 @@
 
             // HUAWEI
             huaweicb.addEventListener("change", function() {
-                localStorage.setItem("huaweicb", huaweicb.checked);
+                sessionStorage.setItem("huaweicb", huaweicb.checked);
                 if (huaweicb.checked) {
                     window.location.replace(window.location.href + "?kategorie=huawei");
                 }
@@ -422,7 +422,7 @@
 
             // LAPTOP
             laptopcb.addEventListener("change", function() {
-                localStorage.setItem("laptopcb", laptopcb.checked);
+                sessionStorage.setItem("laptopcb", laptopcb.checked);
                 if (laptopcb.checked) {
                     window.location.replace(window.location.href + "?kategorie=laptop");
                 }
@@ -430,7 +430,7 @@
 
             // MONITOR
             monitorcb.addEventListener("change", function() {
-                localStorage.setItem("monitorcb", monitorcb.checked);
+                sessionStorage.setItem("monitorcb", monitorcb.checked);
                 if (monitorcb.checked) {
                     window.location.replace(window.location.href + "?kategorie=monitor");
                 }
@@ -438,7 +438,7 @@
 
             // SONST
             sonstcb.addEventListener("change", function() {
-                localStorage.setItem("sonstcb", sonstcb.checked);
+                sessionStorage.setItem("sonstcb", sonstcb.checked);
                 if (sonstcb.checked) {
                     window.location.replace(window.location.href + "?kategorie=sonstiges");
                 }
