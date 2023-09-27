@@ -46,8 +46,7 @@ img {
     -ms-filter: grayscale(100%);
     -o-filter: grayscale(100%);
     filter: grayscale(100%);
-    width: 350px;
-    height: 325px;
+
 }
 
 h1 {
@@ -150,11 +149,9 @@ input[type="checkbox"]:checked::before {
 }
 
 #checkboxen {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: inline;
+
     margin-left: 40px;
-    margin-top: 35px;
     width: 50px;
 }
 
@@ -176,29 +173,16 @@ input:focus {
     outline: none;
 }
 
-button[type="submit"]:hover {
-    background-color: gray;
-}
-
-button[type="submit"] {
-    display: inline-block;
-    height: inherit;
-    background: none;
-    border-width: 0;
-    border-style: none;
-    outline: none;
-}
 
 #kategorien {
     position: relative;
     width: 60px;
     height: auto !important;
-    height: 150px;
+
     left: -35px;
     min-height: 150px;
-    margin-top: -149px;
-    margin-left: 100px;
-    float: left;
+    margin-top: 0em;
+    margin-left: 4em;
 }
 
 

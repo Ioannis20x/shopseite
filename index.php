@@ -21,56 +21,42 @@
                 <button type="submit">
                     <span class="material-symbols-outlined">search</span>
                 </button>
-            </form>
+
         </div>
         <h2 id="h2kat">Kategorien</h2>
 
         <div id="checkboxen">
-
-            <div class="kategorie">
-                <input type="checkbox" name="handys" id="handycb" class="checkbox">
+            <div id="kategorien">
+                <?php
+                include_once "db.php";
+                $sql = "SELECT * FROM Kategorien";
+                $result = $dbhandle->query($sql);
+                if ($result && $result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<label><input type='checkbox' name='geraet' value='" . $row['kategorie'] . "'/>" . $row['kategorie'] . "</label>";
+                    }
+                }
+                
+                ?>
             </div>
-
-            <div class="kategorie">
-                <input type="checkbox" name="handys" id="huaweicb" class="checkbox">
-
-            </div>
-            <div class="kategorie">
-                <input type="checkbox" name="handys" id="laptopcb" class="checkbox">
-            </div>
-            <div class="kategorie">
-                <input type="checkbox" name="handys" id="monitorcb" class="checkbox">
-            </div>
-            <div class="kategorie">
-                <input type="checkbox" name="handys" id="sonstcb" class="checkbox">
-            </div>
-        </div>
-        <div id="kategorien">
-            <label for="handycb" id="firstlabel">Handys</label>
-            <label for="huaweicb">Huawei</label>
-            <label for="laptopcb">Laptops</label>
-            <label for="monitorcb">Monitore</label>
-            <label for="sonstcb">Sonstiges</label>
         </div>
         <h2 id="h2price">Preisspanne</h2>
         <div id="pricefilter">
-            <form action="" method="post">
-                <select name="prices" id="prices">
-                    <option value="default" selected>Preisspanne wählen...</option>
-                    <option value="100" value="Select * From produkte Where preis > 0 and preis > 100">0€ - 100€</option>
-                    <option value="500">100€ - 500€</option>
-                    <option value="1000">500€ - 1000€</option>
-                    <option value="2000">100€ - 2000€</option>
-                </select>
-                <input type="submit" value="Preisspanne wählen...">
-            </form>
 
+            <select name="prices" id="prices" onchange="this.form.submit()">
+                <option value="" selected>Preisspanne wählen...</option>
+                <option value="100" value="Select * From produkte Where preis > 0 and preis > 100">0€ - 100€</option>
+                <option value="500">100€ - 500€</option>
+                <option value="1000">500€ - 1000€</option>
+                <option value="2000">100€ - 2000€</option>
+            </select>
         </div>
+        </form>
     </div>
 
     <div class="grid-container">
         <?php
-        include "db.php";
+        include_once "db.php";
         include_once "import.php";
         include_once "suche.php";
 
@@ -82,7 +68,7 @@
 
 
         if (isset($_GET["page"])) {
-            $offset = (6 * $_GET["page"]) - 6;
+            $offset = (6 * $_GET["page"]) - 7;
             if ($_GET["page"] > 1) {
                 $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
                 $result = $dbhandle->query($sql);
@@ -140,7 +126,7 @@
     </div>
 
 
-    <script>
+    <!-- <script>
         // Alle Checkboxen auswählen
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         var handycb = document.getElementById("handycb");
@@ -150,7 +136,35 @@
         var sonstcb = document.getElementById("sonstcb");
 
         function uncheckall(kat) {
-
+            switch (kat) {
+                case 1:
+                    huaweicb.disabled = true;
+                    break;
+                case 2:
+                    localStorage.clear("handycb");
+                    localStorage.clear("laptopcb");
+                    localStorage.clear("monitorcb");
+                    localStorage.clear("sonstcb");
+                    break;
+                case 3:
+                    localStorage.clear("handycb");
+                    localStorage.clear("huaweicb");
+                    localStorage.clear("monitorcb");
+                    localStorage.clear("sonstcb");
+                    break;
+                case 4:
+                    localStorage.clear("handycb");
+                    localStorage.clear("laptopcb");
+                    localStorage.clear("huaweicb");
+                    localStorage.clear("sonstcb");
+                    break;
+                case 5:
+                    localStorage.clear("handycb");
+                    localStorage.clear("laptopcb");
+                    localStorage.clear("huaweicb");
+                    localStorage.clear("monitorcb");
+                    break;
+            }
         }
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -179,7 +193,6 @@
                 if (handycb.checked) {
                     uncheckall(1);
                     window.location.replace(window.location.href + "?kategorie=handys");
-
                 } else {
                     window.location.replace("http://localhost/shop")
                 }
@@ -189,7 +202,7 @@
             huaweicb.addEventListener("change", function() {
                 localStorage.setItem("huaweicb", huaweicb.checked);
                 if (huaweicb.checked) {
-                    uncheckall(2);
+                    uncheckall(1);
                     window.location.replace(window.location.href + "?kategorie=huawei");
                 } else {
                     window.location.replace("http://localhost/shop")
@@ -229,7 +242,7 @@
 
 
         // Event-Listener für jede Checkbox hinzufügen
-    </script>
+    </script> -->
 </body>
 
 </html>
