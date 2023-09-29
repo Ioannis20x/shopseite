@@ -41,7 +41,7 @@
                 ?>
             </div>
         </div>
-        <h2 id="h2price">Preisspanne</h2>
+        <h2 id="h2price">Preis</h2>
         <div id="pricefilter">
             <select name="prices" id="prices" onchange="this.form.submit()">
                 <option value="" selected>Preisspanne wählen...</option>
@@ -126,123 +126,6 @@
     </div>
 
 
-    <!-- <script>
-        // Alle Checkboxen auswählen
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var handycb = document.getElementById("handycb");
-        var huaweicb = document.getElementById("huaweicb");
-        var laptopcb = document.getElementById("laptopcb");
-        var monitorcb = document.getElementById("monitorcb");
-        var sonstcb = document.getElementById("sonstcb");
-
-        function uncheckall(kat) {
-            switch (kat) {
-                case 1:
-                    huaweicb.disabled = true;
-                    break;
-                case 2:
-                    localStorage.clear("handycb");
-                    localStorage.clear("laptopcb");
-                    localStorage.clear("monitorcb");
-                    localStorage.clear("sonstcb");
-                    break;
-                case 3:
-                    localStorage.clear("handycb");
-                    localStorage.clear("huaweicb");
-                    localStorage.clear("monitorcb");
-                    localStorage.clear("sonstcb");
-                    break;
-                case 4:
-                    localStorage.clear("handycb");
-                    localStorage.clear("laptopcb");
-                    localStorage.clear("huaweicb");
-                    localStorage.clear("sonstcb");
-                    break;
-                case 5:
-                    localStorage.clear("handycb");
-                    localStorage.clear("laptopcb");
-                    localStorage.clear("huaweicb");
-                    localStorage.clear("monitorcb");
-                    break;
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-
-
-            // Überprüfen, ob die Checkboxen im localStorage gespeichert sind und den Haken entsprechend setzen
-            if (localStorage.getItem("handycb") === "true") {
-                handycb.checked = true;
-            }
-            if (localStorage.getItem("huaweicb") === "true") {
-                huaweicb.checked = true;
-            }
-            if (localStorage.getItem("laptopcb") === "true") {
-                laptopcb.checked = true;
-            }
-            if (localStorage.getItem("monitorcb") === "true") {
-                monitorcb.checked = true;
-            }
-            if (localStorage.getItem("sonstcb") === "true") {
-                sonstcb.checked = true;
-            }
-
-            // HANDY
-            handycb.addEventListener("change", function() {
-                localStorage.setItem("handycb", handycb.checked);
-                if (handycb.checked) {
-                    uncheckall(1);
-                    window.location.replace(window.location.href + "?kategorie=handys");
-                } else {
-                    window.location.replace("http://localhost/shop")
-                }
-            });
-
-            // HUAWEI
-            huaweicb.addEventListener("change", function() {
-                localStorage.setItem("huaweicb", huaweicb.checked);
-                if (huaweicb.checked) {
-                    uncheckall(1);
-                    window.location.replace(window.location.href + "?kategorie=huawei");
-                } else {
-                    window.location.replace("http://localhost/shop")
-                }
-            });
-
-            // LAPTOP
-            laptopcb.addEventListener("change", function() {
-                localStorage.setItem("laptopcb", laptopcb.checked);
-                if (laptopcb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=laptop");
-                } else {
-                    window.location.replace("http://localhost/shop")
-                }
-            });
-
-            // MONITOR
-            monitorcb.addEventListener("change", function() {
-                localStorage.setItem("monitorcb", monitorcb.checked);
-                if (monitorcb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=monitor");
-                } else {
-                    window.location.replace("http://localhost/shop")
-                }
-            });
-
-            // SONST
-            sonstcb.addEventListener("change", function() {
-                localStorage.setItem("sonstcb", sonstcb.checked);
-                if (sonstcb.checked) {
-                    window.location.replace(window.location.href + "?kategorie=sonstiges");
-                } else {
-                    window.location.replace("http://localhost/shop")
-                }
-            });
-        });
-
-
-        // Event-Listener für jede Checkbox hinzufügen
-    </script> -->
 </body>
 
 </html>

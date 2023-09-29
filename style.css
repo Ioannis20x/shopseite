@@ -181,7 +181,7 @@ input:focus {
     height: auto !important;
     min-height: 150px;
     margin-top: 2.375em;
-    margin-left: 4em;
+    margin-left: 3.25em;
 }
 
 
@@ -212,23 +212,24 @@ button[type="submit"] {
 #h2price {
     display: inline-block;
     position: absolute;
-    margin-left: -10em;
+    margin-left: -6.5em;
     border: none;
 }
 
 #h2kat {
     display: inline-block;
     position: absolute;
-    margin-right: 5em;
+    margin-top: 3.375em;
+    margin-left:-10.5em;
     text-align: left;
     border: none;
 }
 
 #prices {
     height: 30px;
-    margin-top: 60px;
+    margin-top: 3.625em;
     width: 215px;
-    margin-left: 40px;
+    margin-left: 1.5em;
     display: block;
     border: solid 1px;
 

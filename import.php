@@ -17,7 +17,9 @@ if ($conn->connect_error) {
 }
 
 // CSV-Datei einlesen und Daten importieren
+
 if (($handle = fopen("csv.csv", "r")) !== FALSE) {
+    fgetcsv($handle);
     while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
         $produkt = $data[0];
         $preis = $data[1];
@@ -39,7 +41,6 @@ if (($handle = fopen("csv.csv", "r")) !== FALSE) {
             $preis = str_replace('.', '', $preis);
             $preis = str_replace(',', '.', $preis);
             $preis = (float)$preis;
-            //$preis = number_format($preis, 2, ',', '.');
             // Produkt in DB einfügen
             $insprodquery = "INSERT INTO produkte (produkt, preis, lager, lieferzeit, dateiname) 
                 VALUES ('$produkt', '$preis', $lager, $lieferzeit, '$dateiname')";
