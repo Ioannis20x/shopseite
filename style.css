@@ -109,23 +109,24 @@ body {
 
 }
 
-input[type="checkbox"] {
+#kategorien input[type="checkbox"] {
     appearance: none;
     box-sizing: border-box;
     padding: 0;
-    display: list-item;
     width: 1.15em;
     height: 1.15em;
     position: absolute;
     display: grid;
-    place-content: center;
     font: inherit;
     color: currentColor;
     border: 0.1em solid grey;
     border-radius: 0;
+    margin-top: 0em;
+    margin-left: -2.0em;
     transform: translateY(-0.075em);
     place-content: center;
     content: "";
+
 }
 
 input[type="checkbox"]::before {
@@ -178,10 +179,8 @@ input:focus {
     position: relative;
     width: 60px;
     height: auto !important;
-
-    left: -35px;
     min-height: 150px;
-    margin-top: 0em;
+    margin-top: 2.375em;
     margin-left: 4em;
 }
 
@@ -192,23 +191,36 @@ label {
     font-weight: 400;
     color: #505050;
     line-height: 19px;
+    display: block;
+    margin-top: 0.625em;
+    text-align: left;
+}
+
+button[type="submit"]:hover {
+    background-color: gray;
+}
+
+button[type="submit"] {
     display: inline-block;
-    margin-top: 10px;
+    height: inherit;
+    background: none;
+    border-width: 0;
+    border-style: none;
+    outline: none;
 }
 
 #h2price {
     display: inline-block;
     position: absolute;
-    top: 255px;
-    left: 50px;
+    margin-left: -10em;
     border: none;
 }
 
 #h2kat {
     display: inline-block;
     position: absolute;
-    top: 62px;
-    left: 50px;
+    margin-right: 5em;
+    text-align: left;
     border: none;
 }
 

@@ -29,7 +29,8 @@
             <div id="kategorien">
                 <?php
                 include_once "db.php";
-                $sql = "SELECT * FROM Kategorien";
+
+                $sql = "SELECT * FROM kategorien";
                 $result = $dbhandle->query($sql);
                 if ($result && $result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
@@ -42,7 +43,6 @@
         </div>
         <h2 id="h2price">Preisspanne</h2>
         <div id="pricefilter">
-
             <select name="prices" id="prices" onchange="this.form.submit()">
                 <option value="" selected>Preisspanne wählen...</option>
                 <option value="100" value="Select * From produkte Where preis > 0 and preis > 100">0€ - 100€</option>
@@ -68,7 +68,7 @@
 
 
         if (isset($_GET["page"])) {
-            $offset = (6 * $_GET["page"]) - 7;
+            $offset = (6 * $_GET["page"]) - 6;
             if ($_GET["page"] > 1) {
                 $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
                 $result = $dbhandle->query($sql);
