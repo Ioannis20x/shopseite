@@ -28,7 +28,7 @@ if (isset($_GET['suchbegriff'])) {
             }
             echo "</div>";
         }
-    }else{
+    } else {
         echo "<b>Es wurden keine Produkte gefunden, welche ihrer Suchanfrage entsprechen.</b>";
     }
 }
