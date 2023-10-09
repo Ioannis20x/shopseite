@@ -1,7 +1,7 @@
 /*DETEILANSICHT*/
 #prodbild img {
     width: 500px;
-    height: 500px;
+    height: 400px;
 }
 
 #prodbild {
@@ -9,10 +9,11 @@
 }
 
 #backbutton {
-    display: block;
+    display: inline-block;
+    margin-top:1.5em;
 }
 
-#prodbild a {
+#backbutton a {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 400;
