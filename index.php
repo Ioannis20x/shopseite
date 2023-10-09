@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,7 +17,8 @@
 
     <div id="filter">
         <div id="suche">
-            <form action="" method="GET" action="suche.php">
+            <form method="POST" action="./suche.php">
+                
                 <input type="search" name="suchbegriff" id="suchleiste" placeholder="Suchen...">
                 <button type="submit">
                     <span class="material-symbols-outlined">search</span>
@@ -37,7 +39,7 @@
                         echo "<label><input type='checkbox' name='geraet' value='" . $row['kategorie'] . "'/>" . $row['kategorie'] . "</label>";
                     }
                 }
-                
+
                 ?>
             </div>
         </div>
@@ -91,7 +93,6 @@
             $kat = mysqli_fetch_assoc($result);
             print_r($kat);
         }
-
 
         if (!isset($_GET["suchbegriff"])) {
             if ($result && $result->num_rows > 0) {

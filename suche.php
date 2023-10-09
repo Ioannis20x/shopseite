@@ -32,7 +32,3 @@ if (isset($_GET['suchbegriff'])) {
         echo "<b>Es wurden keine Produkte gefunden, welche ihrer Suchanfrage entsprechen.</b>";
     }
 }
-
-if(isset($_GET["kategorie"])){
-    
-}
