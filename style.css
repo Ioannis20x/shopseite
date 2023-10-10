@@ -6,11 +6,49 @@
 
 #prodbild {
     display: block;
+    width: 60%;
+
+}
+
+#preis {
+    margin-top: 3em;
+}
+
+#details #prodname {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 25px;
+    font-weight: 700;
+    color: #505050;
+    line-height: 24px;
+    margin-right: 1em;
+}
+
+#details h2 {
+    display: inline-block;
+    height: 0;
+    width: auto;
+}
+#details h1 {
+    display: block;
+    margin-top: 0;
+    width: auto;
+}
+
+#details {
+    float: left;
+    width: 80%;
+    /* optionale Weitenangabe */
+}
+
+#oben {
+    display: flex;
+    padding-top: 4em;
 }
 
 #backbutton {
     display: inline-block;
-    margin-top:1.5em;
+    margin-top: 0.4em;
+    width: 05%;
 }
 
 #backbutton a {
