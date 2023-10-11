@@ -53,7 +53,7 @@
                     echo '<div id="lager">
                     <h2>Lagerbestand</h2>';
                     if ($row["lager"] == 0) {
-                        echo '<h1>AUSVERKAUFT</h1>';
+                        echo '<h1 class="sold">AUSVERKAUFT</h1>';
                     } else {
                         echo '<h1>' . $row["lager"] . ' auf Lager </h1>.';
                     }

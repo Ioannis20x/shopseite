@@ -17,7 +17,7 @@
 
     <div id="filter">
         <div id="suche">
-            <form method="POST" action="./suche.php">
+            <form method="POST" action="./index.php">
                 
                 <input type="search" name="suchbegriff" id="suchleiste" placeholder="Suchen...">
                 <button type="submit">
@@ -105,7 +105,7 @@
                     echo "</h1>";
                     echo "<h2 class='price'>$preis €</h2>";
                     if ($row["lager"] == 0) {
-                        echo "<h1 id='sold'>AUSVERKAUFT</h1>";
+                        echo "<h1 id='soldindex' class='sold'>AUSVERKAUFT</h1>";
                         echo '<img class="grau" src="' . './alle_produkte/' . $row["dateiname"] . '">';
                     } else {
                         echo '<img draggable="false" src="' . './alle_produkte/' . $row["dateiname"] . '">';
