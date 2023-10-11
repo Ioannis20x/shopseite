@@ -140,7 +140,9 @@
     flex-wrap: wrap;
     gap: 15px;
 }
-
+.grid-container a{
+    text-decoration: none !important; 
+}
 .grid-item {
     width: 500px;
     height: 500px;

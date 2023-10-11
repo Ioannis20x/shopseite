@@ -55,7 +55,7 @@
                 if ($row["lager"] == 0) {
                     echo "<h1>AUSVERKAUFT</h1>";
                 } else {
-                    echo '<h1>'.$row["lager"] . ' auf Lager </h1>.
+                    echo '<h1>' . $row["lager"] . ' auf Lager </h1>.
                 </div>';
                 }
 
@@ -66,8 +66,47 @@
             </div> ';
             }
         }
+
+        $produktid = $_GET["prodid"];
+        $sql1 = "SELECT * FROM mapping WHERE produktid = $produktid";
+        $ergebnis1 = $dbhandle->query($sql1);
+
+        if ($ergebnis1) {
+            $row = $ergebnis1->fetch_assoc();
+            $kategorieid = $row['kategorieid'];
+
+            $sql2 = "SELECT * FROM produkte
+                     JOIN mapping ON produkte.id = mapping.produktid
+                     WHERE mapping.kategorieid = $kategorieid AND produkte.id <> $produktid";
+            $ergebnis2 = $dbhandle->query($sql2);
+
+            if ($ergebnis2 && $ergebnis2->num_rows > 0) {
+                // Es gibt mindestens 1 Produkt derselben Kategorie (außer dem ausgewählten Produkt)
+                while ($row = $ergebnis2->fetch_assoc()) {
+                    echo $row["produkt"] . "<br>";
+                }
+            } else {
+                // Schritt 2: Wenn nicht genügend Produkte derselben Kategorie vorhanden sind,
+                // suche nach ähnlichen Produkten (hier ein einfaches Beispiel, kann angepasst werden)
+                $produktname = $row['produktname']; // Du kannst den Produktnamen aus der ersten Abfrage verwenden
+
+                $sql3 = "SELECT * FROM produkte WHERE produktname LIKE '%$produktname%' AND produktid <> $produktid LIMIT 5";
+                $ergebnis3 = $dbhandle->query($sql3);
+
+                if ($ergebnis3 && $ergebnis3->num_rows > 0) {
+                    // Es gibt ähnliche Produkte
+                    while ($row = $ergebnis3->fetch_assoc()) {
+                        echo $row["produkt"] . "<br>";
+                    }
+                } else {
+                    echo "Keine weiteren Produkte gefunden";
+                }
+            }
+        } else {
+            echo "Fehler bei der Abfrage: " . $dbhandle->error;
+        }
     } else {
-        echo "Fehler:";
+        echo "Dieses Produkt existiert nicht oder hat keine Detailansicht!";
     }
     ?>
 </body>

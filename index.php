@@ -98,6 +98,7 @@
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $preis = number_format($row["preis"], 2, ',', '.');
+                    echo '<a href="detail.php?prodid='.$row["id"].'">';
                     echo "<div class='grid-item'>";
                     echo "<h1 class='prodname'>";
                     echo $row["produkt"];
@@ -110,6 +111,7 @@
                         echo '<img draggable="false" src="' . './alle_produkte/' . $row["dateiname"] . '">';
                     }
                     echo "</div>";
+                    echo "</a>";
                 }
             } else {
                 echo "Keine Daten gefunden.";
