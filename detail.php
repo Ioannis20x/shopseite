@@ -14,98 +14,121 @@
 </head>
 
 <body>
-    <?php
-
-    include_once "db.php";
-
-    if (isset($_GET["prodid"])) {
-        $prodid = $_GET['prodid'];
-        $sql = "SELECT * FROM produkte WHERE id = " . $prodid;
-
-        $result = $dbhandle->query($sql);
-        if (!$result) {
-            die('SQL-Fehler: ' . mysqli_error($conn));
-        }
-        if ($result && $result->num_rows == 1) {
-            while ($row = $result->fetch_assoc()) {
-                $preis = number_format($row["preis"], 2, ',', '.');
-                echo "<div id='oben'>
-            <div id='backbutton'>
+    <div id='oben'>
+        <div id='backbutton'>
             <a href='./index.php'>&#706; zurück</a>
-            </div>";
-                echo '<div id="prodbild">
+        </div>
+        <?php
+
+        include_once "db.php";
+
+        if (isset($_GET["prodid"])) {
+            $prodid = $_GET['prodid'];
+            $sql = "SELECT * FROM produkte WHERE id = " . $prodid;
+
+            $result = $dbhandle->query($sql);
+            if (!$result) {
+                die('SQL-Fehler: ' . mysqli_error($conn));
+            }
+            if ($result && $result->num_rows == 1) {
+                while ($row = $result->fetch_assoc()) {
+                    $preis = number_format($row["preis"], 2, ',', '.');
+                    echo '<div id="prodbild">
                     <img src="./alle_produkte/' . $row["dateiname"] . '" alt="">
                 </div>';
 
-                echo '<div id="details">
+                    echo '<div id="details">
                 <h1 id="prodname">' . $row["produkt"] . '</h1>';
 
-                echo ' <div id="preis">
+                    echo ' <div id="preis">
                             <h2>Preis</h2>
                             <h1>' . $row["preis"] . '€</h1>
                     </div>';
 
-                echo '<div id="versand">
+                    echo '<div id="versand">
                      <h2>Versand</h2>
                     <h1>Lieferung in ' . $row["lieferzeit"] . ' Tagen</h1>
                  </div>';
 
-                echo '<div id="lager">
+                    echo '<div id="lager">
                     <h2>Lagerbestand</h2>';
-                if ($row["lager"] == 0) {
-                    echo "<h1>AUSVERKAUFT</h1>";
-                } else {
-                    echo '<h1>' . $row["lager"] . ' auf Lager </h1>.
-                </div>';
-                }
-
-                echo '<form action="./kauf.html">
+                    if ($row["lager"] == 0) {
+                        echo '<h1>AUSVERKAUFT</h1>';
+                    } else {
+                        echo '<h1>' . $row["lager"] . ' auf Lager </h1>.';
+                    }
+                   echo '</div>';
+                    echo '<form action="./kauf.html">
                          <button id="kaufbutton" type="submit">Kaufen</button>
                  </form>
                 </div>
-            </div> ';
+            </div>';
+                }
             }
-        }
 
-        $produktid = $_GET["prodid"];
-        $sql1 = "SELECT * FROM mapping WHERE produktid = $produktid";
-        $ergebnis1 = $dbhandle->query($sql1);
+            $produktid = $_GET["prodid"];
+            $sql1 = "SELECT * FROM mapping WHERE produktid = $produktid";
+            $ergebnis1 = $dbhandle->query($sql1);
 
-        if ($ergebnis1) {
-            $row = $ergebnis1->fetch_assoc();
-            $kategorieid = $row['kategorieid'];
+            if ($ergebnis1) {
+                $row = $ergebnis1->fetch_assoc();
+                $kategorieid = $row['kategorieid'];
 
-            $sql2 = "SELECT * FROM produkte
-            JOIN mapping ON produkte.id = mapping.produktid
-            WHERE mapping.kategorieid = $kategorieid AND produkte.id <> $produktid LIMIT 5";
-            $ergebnis2 = $dbhandle->query($sql2);
+                // Schritt 1: Versuche, genau 5 Produkte derselben Kategorie abzurufen
+                $sql2 = "SELECT * FROM produkte
+                     JOIN mapping ON produkte.id = mapping.produktid
+                     WHERE mapping.kategorieid = $kategorieid AND produkte.id <> $produktid
+                     LIMIT 6"; // Maximal 5 Produkte anzeigen
+                $ergebnis2 = $dbhandle->query($sql2);
 
-
-            if ($ergebnis2 && $ergebnis2->num_rows > 0) {
-                while ($row = $ergebnis2->fetch_assoc()) {
-                    echo $row["produkt"] . "<br>";
-                }
-            } else if($ergebnis2->num_rows < 5) {
-                $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 5";
-                $ergebnis3 = $dbhandle->query($sql3);
-
-                if ($ergebnis3 && $ergebnis3->num_rows > 0) {
-                    while ($row = $ergebnis3->fetch_assoc()) {
-                    echo $row["produkt"] . "<br>";
+                if ($ergebnis2 && $ergebnis2->num_rows > 0) {
+                    // Es gibt mindestens 1 Produkt derselben Kategorie (außer dem ausgewählten Produkt)
+                    while ($row = $ergebnis2->fetch_assoc()) {
+                        showalt($row, $ergebnis2);
                     }
-                } else {
-                    header('location: ./index.php');
-                }
-            }else{
-                header('location: ./index.php');  
+                } /*else {
+
+                    $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 6"; // Maximal 5 Produkte anzeigen
+                    $ergebnis3 = $dbhandle->query($sql3);
+
+                    if ($ergebnis3 && $ergebnis3->num_rows > 0) {
+                        // Es gibt ähnliche Produkte
+                        while ($row = $ergebnis3->fetch_assoc()) {
+                            showalt($row, $ergebnis3);
+                        }
+                    } else {
+                        echo "Keine weiteren Produkte gefunden";
+                    }
+                }*/
+            } else {
+                echo "Fehler bei der Abfrage: " . $dbhandle->error;
             }
         } else {
-            echo "Fehler bei der Abfrage: " . $dbhandle->error;
+            header('location: ./index.php');
         }
-    } else {
-        header('location: ./index.php');
-    }
-    ?>
+
+
+
+
+        function showalt($ro, $res)
+        {
+            echo '<div id="unten">';
+            echo '<h1 id="vortit">Ähnliche Produkte</h1>';
+            echo '<div id="vorschl">';
+            while ($ro = $res->fetch_assoc()) {
+                echo '<div class="vprod">
+                    <div class="vprodinfo">';
+                echo '<h1>' . $ro["produkt"] . '</h1>';
+                echo '<h2>' . $ro["preis"] . '€</h1>';
+                echo "</div>";
+                echo '<img src="./alle_produkte/' . $ro["dateiname"] . '">';
+                echo "</div>";
+            }
+
+            echo "</div>";
+            echo "</div>";
+        }
+        ?>
 </body>
 
 </html>
