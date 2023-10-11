@@ -42,7 +42,7 @@
 
                 echo ' <div id="preis">
                             <h2>Preis</h2>
-                            <h1>' . $row["preis"] . '</h1>
+                            <h1>' . $row["preis"] . '€</h1>
                     </div>';
 
                 echo '<div id="versand">
@@ -76,37 +76,34 @@
             $kategorieid = $row['kategorieid'];
 
             $sql2 = "SELECT * FROM produkte
-                     JOIN mapping ON produkte.id = mapping.produktid
-                     WHERE mapping.kategorieid = $kategorieid AND produkte.id <> $produktid";
+            JOIN mapping ON produkte.id = mapping.produktid
+            WHERE mapping.kategorieid = $kategorieid AND produkte.id <> $produktid LIMIT 5";
             $ergebnis2 = $dbhandle->query($sql2);
 
+
             if ($ergebnis2 && $ergebnis2->num_rows > 0) {
-                // Es gibt mindestens 1 Produkt derselben Kategorie (außer dem ausgewählten Produkt)
                 while ($row = $ergebnis2->fetch_assoc()) {
                     echo $row["produkt"] . "<br>";
                 }
-            } else {
-                // Schritt 2: Wenn nicht genügend Produkte derselben Kategorie vorhanden sind,
-                // suche nach ähnlichen Produkten (hier ein einfaches Beispiel, kann angepasst werden)
-                $produktname = $row['produktname']; // Du kannst den Produktnamen aus der ersten Abfrage verwenden
-
-                $sql3 = "SELECT * FROM produkte WHERE produktname LIKE '%$produktname%' AND produktid <> $produktid LIMIT 5";
+            } else if($ergebnis2->num_rows < 5) {
+                $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 5";
                 $ergebnis3 = $dbhandle->query($sql3);
 
                 if ($ergebnis3 && $ergebnis3->num_rows > 0) {
-                    // Es gibt ähnliche Produkte
                     while ($row = $ergebnis3->fetch_assoc()) {
-                        echo $row["produkt"] . "<br>";
+                    echo $row["produkt"] . "<br>";
                     }
                 } else {
-                    echo "Keine weiteren Produkte gefunden";
+                    header('location: ./index.php');
                 }
+            }else{
+                header('location: ./index.php');  
             }
         } else {
             echo "Fehler bei der Abfrage: " . $dbhandle->error;
         }
     } else {
-        echo "Dieses Produkt existiert nicht oder hat keine Detailansicht!";
+        header('location: ./index.php');
     }
     ?>
 </body>
