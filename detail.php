@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
     <title>Detailseite</title>
 </head>
@@ -16,13 +15,19 @@
 <body>
     <div id='oben'>
         <div id='backbutton'>
-            <a href="javascript:history.back()">&#706; zurück</a>
+            <?php
+            $prodid = $_GET['prodid'];
+                $backpage = ($prodid / 6) + $prodid % 2;
+            var_dump(intval($backpage));
+            echo '<a href="./index.php?page=' . intval($backpage) . '">&#706; zurück</a>';
+            ?>
         </div>
         <?php
         include_once "db.php";
 
         if (isset($_GET["prodid"])) {
             $prodid = $_GET['prodid'];
+
             $sql = "SELECT * FROM produkte WHERE id = " . $prodid;
 
             $result = $dbhandle->query($sql);
@@ -81,12 +86,12 @@
                 $ergebnis2 = $dbhandle->query($sql2);
 
                 if ($ergebnis2 && $ergebnis2->num_rows > 0) {
-                    
+
                     echo '<div id="unten">';
                     echo '<h1 id="vortit">Ähnliche Produkte</h1>';
                     echo '<div id="vorschl">';
                     while ($row = $ergebnis2->fetch_assoc()) {
-                        echo '<a href=./detail.php?prodid='.$row["produktid"].'>';
+                        echo '<a href=./detail.php?prodid=' . $row["produktid"] . '>';
                         echo '<div class="vprod">
                             <div class="vprodinfo">';
                         echo '<h1>' . $row["produkt"] . '</h1>';
@@ -97,7 +102,7 @@
                         echo "</a>";
                     }
                     echo "</div>";
-                    
+
                     echo "</div>";
                 } else {
                     $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 5";
