@@ -19,7 +19,6 @@
             <a href='./index.php'>&#706; zurück</a>
         </div>
         <?php
-
         include_once "db.php";
 
         if (isset($_GET["prodid"])) {
@@ -32,35 +31,36 @@
             }
             if ($result && $result->num_rows == 1) {
                 while ($row = $result->fetch_assoc()) {
+                    $produktname = $row["produkt"];
                     $preis = number_format($row["preis"], 2, ',', '.');
                     echo '<div id="prodbild">
-                    <img src="./alle_produkte/' . $row["dateiname"] . '" alt="">
-                </div>';
-
-                    echo '<div id="details">
-                <h1 id="prodname">' . $row["produkt"] . '</h1>';
-
-                    echo ' <div id="preis">
-                            <h2>Preis</h2>
-                            <h1>' . $row["preis"] . '€</h1>
+                        <img src="./alle_produkte/' . $row["dateiname"] . '" alt="">
                     </div>';
 
+                    echo '<div id="details">
+                        <h1 id="prodname">' . $row["produkt"] . '</h1>';
+
+                    echo ' <div id="preis">
+                                <h2>Preis</h2>
+                                <h1>' . $row["preis"] . '€</h1>
+                        </div>';
+
                     echo '<div id="versand">
-                     <h2>Versand</h2>
-                    <h1>Lieferung in ' . $row["lieferzeit"] . ' Tagen</h1>
-                 </div>';
+                         <h2>Versand</h2>
+                        <h1>Lieferung in ' . $row["lieferzeit"] . ' Tagen</h1>
+                    </div>';
 
                     echo '<div id="lager">
-                    <h2>Lagerbestand</h2>';
+                        <h2>Lagerbestand</h2>';
                     if ($row["lager"] == 0) {
                         echo '<h1 class="sold">AUSVERKAUFT</h1>';
                     } else {
                         echo '<h1>' . $row["lager"] . ' auf Lager </h1>.';
                     }
-                   echo '</div>';
+                    echo '</div>';
                     echo '<form action="./kauf.html">
                          <button id="kaufbutton" type="submit">Kaufen</button>
-                 </form>
+                    </form>
                 </div>
             </div>';
                 }
@@ -74,61 +74,58 @@
                 $row = $ergebnis1->fetch_assoc();
                 $kategorieid = $row['kategorieid'];
 
-                // Schritt 1: Versuche, genau 5 Produkte derselben Kategorie abzurufen
                 $sql2 = "SELECT * FROM produkte
                      JOIN mapping ON produkte.id = mapping.produktid
                      WHERE mapping.kategorieid = $kategorieid AND produkte.id <> $produktid
-                     LIMIT 6"; // Maximal 5 Produkte anzeigen
+                     LIMIT 5";
                 $ergebnis2 = $dbhandle->query($sql2);
 
                 if ($ergebnis2 && $ergebnis2->num_rows > 0) {
-                    // Es gibt mindestens 1 Produkt derselben Kategorie (außer dem ausgewählten Produkt)
+                    echo '<div id="unten">';
+                    echo '<h1 id="vortit">Ähnliche Produkte</h1>';
+                    echo '<div id="vorschl">';
                     while ($row = $ergebnis2->fetch_assoc()) {
-                        showalt($row, $ergebnis2);
+                        echo '<div class="vprod">
+                            <div class="vprodinfo">';
+                        echo '<h1>' . $row["produkt"] . '</h1>';
+                        echo '<h2>' . $row["preis"] . '€</h1>';
+                        echo "</div>";
+                        echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
+                        echo "</div>";
                     }
-                } /*else {
-
-                    $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 6"; // Maximal 5 Produkte anzeigen
+                    echo "</div>";
+                    echo "</div>";
+                } else {
+                    $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 5"; // Maximal 5 Produkte anzeigen
                     $ergebnis3 = $dbhandle->query($sql3);
 
                     if ($ergebnis3 && $ergebnis3->num_rows > 0) {
-                        // Es gibt ähnliche Produkte
+                        echo '<div id="unten">';
+                        echo '<h1 id="vortit">Ähnliche Produkte</h1>';
+                        echo '<div id="vorschl">';
                         while ($row = $ergebnis3->fetch_assoc()) {
-                            showalt($row, $ergebnis3);
+                            echo '<div class="vprod">
+                                <div class="vprodinfo">';
+                            echo '<h1>' . $row["produkt"] . '</h1>';
+                            echo '<h2>' . $row["preis"] . '€</h1>';
+                            echo "</div>";
+                            echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
+                            echo "</div>";
                         }
+                        echo "</div>";
+                        echo "</div>";
                     } else {
                         echo "Keine weiteren Produkte gefunden";
                     }
-                }*/
+                }
             } else {
                 echo "Fehler bei der Abfrage: " . $dbhandle->error;
             }
         } else {
             header('location: ./index.php');
         }
-
-
-
-
-        function showalt($ro, $res)
-        {
-            echo '<div id="unten">';
-            echo '<h1 id="vortit">Ähnliche Produkte</h1>';
-            echo '<div id="vorschl">';
-            while ($ro = $res->fetch_assoc()) {
-                echo '<div class="vprod">
-                    <div class="vprodinfo">';
-                echo '<h1>' . $ro["produkt"] . '</h1>';
-                echo '<h2>' . $ro["preis"] . '€</h1>';
-                echo "</div>";
-                echo '<img src="./alle_produkte/' . $ro["dateiname"] . '">';
-                echo "</div>";
-            }
-
-            echo "</div>";
-            echo "</div>";
-        }
         ?>
+    </div>
 </body>
 
 </html>
