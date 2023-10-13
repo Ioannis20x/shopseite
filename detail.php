@@ -16,7 +16,7 @@
 <body>
     <div id='oben'>
         <div id='backbutton'>
-            <a href='./index.php'>&#706; zurück</a>
+            <a href="javascript:history.back()">&#706; zurück</a>
         </div>
         <?php
         include_once "db.php";
@@ -55,7 +55,7 @@
                     if ($row["lager"] == 0) {
                         echo '<h1 class="sold">AUSVERKAUFT</h1>';
                     } else {
-                        echo '<h1>' . $row["lager"] . ' auf Lager </h1>.';
+                        echo '<h1>' . $row["lager"] . ' Stück auf Lager </h1>.';
                     }
                     echo '</div>';
                     echo '<form action="./kauf.html">
@@ -81,10 +81,12 @@
                 $ergebnis2 = $dbhandle->query($sql2);
 
                 if ($ergebnis2 && $ergebnis2->num_rows > 0) {
+                    
                     echo '<div id="unten">';
                     echo '<h1 id="vortit">Ähnliche Produkte</h1>';
                     echo '<div id="vorschl">';
                     while ($row = $ergebnis2->fetch_assoc()) {
+                        echo '<a href=./detail.php?prodid='.$row["produktid"].'>';
                         echo '<div class="vprod">
                             <div class="vprodinfo">';
                         echo '<h1>' . $row["produkt"] . '</h1>';
@@ -92,11 +94,13 @@
                         echo "</div>";
                         echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
                         echo "</div>";
+                        echo "</a>";
                     }
                     echo "</div>";
+                    
                     echo "</div>";
                 } else {
-                    $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 5"; // Maximal 5 Produkte anzeigen
+                    $sql3 = "SELECT * FROM produkte WHERE produkt LIKE '%$produktname%' AND id <> $produktid LIMIT 5";
                     $ergebnis3 = $dbhandle->query($sql3);
 
                     if ($ergebnis3 && $ergebnis3->num_rows > 0) {
@@ -122,7 +126,7 @@
                 echo "Fehler bei der Abfrage: " . $dbhandle->error;
             }
         } else {
-            header('location: ./index.php');
+            header('Location:' . $_SERVER['HTTP_REFERER']);
         }
         ?>
     </div>
