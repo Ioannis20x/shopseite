@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -17,7 +18,7 @@
     <div id="filter">
         <div id="suche">
             <form method="POST" action="./index.php">
-                
+
                 <input type="search" name="suchbegriff" id="suchleiste" placeholder="Suchen...">
                 <button type="submit">
                     <span class="material-symbols-outlined">search</span>
@@ -30,6 +31,8 @@
             <div id="kategorien">
                 <?php
                 include_once "db.php";
+                include_once "suche.php";
+                $filter = array();
 
                 $sql = "SELECT * FROM kategorien";
                 $result = $dbhandle->query($sql);
@@ -68,6 +71,40 @@
         $dbname = 'shopseite';
 
 
+        if (isset($_GET['suchbegriff'])) {
+            $filters['suchbegriff'] = $_GET['suchbegriff'];
+        }
+
+        if (isset($_GET['geraet'])) {
+            $filters['kategorien'] = $_GET['geraet'];
+        }
+
+        if (isset($_GET['prices'])) {
+            $filters['prices'] = $_GET['prices'];
+        }
+
+        $sql = buildprodquery($filter);
+
+        $produkte = prodaction($sql);
+
+        foreach ($produkte as $produkt) {
+            $preis = number_format($produkt["preis"], 2, ',', '.');
+            echo '<a href="detail.php?prodid=' . $produkt["id"] . '">';
+            echo "<div class='grid-item'>";
+            echo "<h1 class='prodname'>";
+            echo $produkt["produkt"];
+            echo "</h1>";
+            echo "<h2 class='price'>$preis €</h2>";
+            if ($produkt["lager"] == 0) {
+                echo "<h1 id='soldindex' class='sold'>AUSVERKAUFT</h1>";
+                echo '<img class="grau" src="' . './alle_produkte/' . $produkt["dateiname"] . '">';
+            } else {
+                echo '<img draggable="false" src="' . './alle_produkte/' . $produkt["dateiname"] . '">';
+            }
+            echo "</div>";
+            echo "</a>";
+        }
+          /* 
         if (isset($_GET["page"])) {
             $offset = (6 * $_GET["page"]) - 6;
             if ($_GET["page"] > 1) {
@@ -97,7 +134,7 @@
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     $preis = number_format($row["preis"], 2, ',', '.');
-                    echo '<a href="detail.php?prodid='.$row["id"].'">';
+                    echo '<a href="detail.php?prodid=' . $row["id"] . '">';
                     echo "<div class='grid-item'>";
                     echo "<h1 class='prodname'>";
                     echo $row["produkt"];
@@ -116,7 +153,7 @@
                 echo "Keine Daten gefunden.";
             }
         }
-
+*/
         ?>
     </div>
 

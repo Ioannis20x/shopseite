@@ -1,4 +1,4 @@
-<?php
+<?php /*
 require_once "db.php";
 
 $conn = $dbhandle;
@@ -32,3 +32,29 @@ if (isset($_GET['suchbegriff'])) {
         echo "<b>Es wurden keine Produkte gefunden, welche ihrer Suchanfrage entsprechen.</b>";
     }
 }
+*/
+
+function buildprodquery($filters) {
+    $offset = (6 * $_GET["page"]) - 6;
+    $sql = "SELECT * FROM produkte WHERE 1=1 LIMIT 6 OFFSET $offset";
+
+    if (isset($filters['suchbegriff'])) {
+        $sql .= " AND produkt LIKE '%" . $filters['suchbegriff'] . "%'";
+    }
+
+    if (isset($filters['kategorien'])) {
+        $sql .= " AND kategorie IN ('" . implode("','", $filters['kategorien']) . "')";
+    }
+
+    if (isset($filters['prices'])) {
+        $priceConditions = explode("-", $filters['prices']);
+        $sql .= " AND preis >= " . $priceConditions[0] . " AND preis <= " . $priceConditions[1]."LIMIT 6 OFFSET 1";
+    }
+
+    return $sql;
+}
+
+// Weitere Filterfunktionen hinzufügen
+?>
+
+

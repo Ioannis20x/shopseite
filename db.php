@@ -4,13 +4,13 @@ $dbuser = "root";
 $dbpas = "";
 $dbname = "shopseite";
 
-$dbhandle = new mysqli($servername, $dbuser, $dbpas,$dbname);
+$dbhandle = new mysqli($servername, $dbuser, $dbpas, $dbname);
 
 if ($dbhandle->connect_error) {
     die("Verbindung fehlgeschlagen: " . $dbhandle->connect_error);
 } else {
 
-   // echo "VERBINDUNG: ERFOLG! <br>";
+    // echo "VERBINDUNG: ERFOLG! <br>";
 }
 
 function dbaction($handle, $query)
@@ -27,4 +27,44 @@ function dbaction($handle, $query)
     }
 }
 
-?>
+
+function prodaction($sql)
+{
+    global $dbhandle;
+    $result = $dbhandle->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return array();
+    }
+}
+
+
+function getprods()
+{
+    global $dbhandle;
+
+    $sql = "SELECT * FROM produkte LIMIT 6 OFFSET 1";
+    $result = $dbhandle->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return array();
+    }
+}
+
+function getprodsbycat($category)
+{
+    global $dbhandle;
+
+    $sql = "SELECT * FROM produkte WHERE kategorie = '$category' LIMIT 6 OFFSET 0";
+    $result = $dbhandle->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return array();
+    }
+}
