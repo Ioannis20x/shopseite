@@ -19,7 +19,7 @@
             $prodid = $_GET['prodid'];
             $backpage = ($prodid / 6) + $prodid % 2;
             var_dump(intval($backpage));
-            echo '<a href="./index.php?page=' . intval($backpage) . '">&#706; zurück</a>';
+            echo '<a id="back" href="./index.php?page='.$page.'" >&#706; zurück</a>';
             ?>
         </div>
         <?php
@@ -54,7 +54,7 @@
                     $zukuenftigesDatum = clone $heutigesDatum;
                     $lz = (int)$row["lieferzeit"];
                     $zukuenftigesDatum->modify("+$lz days");
-                    
+
 
                     // Deutsche Wochentage und Monate
                     $deutscheWochentage = [
@@ -62,12 +62,12 @@
                     ];
 
                     $deutscheMonate = [
-                       '', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                        '', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
                         'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
                     ];
 
                     // Das zukünftige Datum im deutschen Format anzeigen
-                    $lieferzeit = $deutscheWochentage[$zukuenftigesDatum->format('w')] . ', ' . $zukuenftigesDatum->format('j') . '. ' . $deutscheMonate[(int)$zukuenftigesDatum->format('n')] ;
+                    $lieferzeit = $deutscheWochentage[$zukuenftigesDatum->format('w')] . ', ' . $zukuenftigesDatum->format('j') . '. ' . $deutscheMonate[(int)$zukuenftigesDatum->format('n')];
                     echo '<div id="versand">
                          <h2>Versand</h2>
                          
@@ -155,5 +155,12 @@
         ?>
     </div>
 </body>
+<script>
+    const back = document.getElementById("back");
+    back.onclick = () => {
+        let page = localStorage.get("page");
+        window.location = "./index.php?page="+page;
+    }
+</script>
 
 </html>

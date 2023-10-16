@@ -17,7 +17,7 @@
 
     <div id="filter">
         <div id="suche">
-            <form method="POST" action="./index.php">
+            <form method="GET" id="filter-form">
 
                 <input type="search" name="suchbegriff" id="suchleiste" placeholder="Suchen...">
                 <button type="submit">
@@ -104,7 +104,7 @@
             echo "</div>";
             echo "</a>";
         }
-          /* 
+        /* 
         if (isset($_GET["page"])) {
             $offset = (6 * $_GET["page"]) - 6;
             if ($_GET["page"] > 1) {
@@ -164,7 +164,14 @@
         <a href="http://localhost/shop/?page=4"><button class="pagebtn">4</button></a>
     </div>
 
-
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+    var product = document.getElementsByClassName("grid-item");
+    product.onclick = ()=>{
+        localstorage.setItem("page",urlParams.get("page"));
+    }
+</script>
 </body>
 
 </html>

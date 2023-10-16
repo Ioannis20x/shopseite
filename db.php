@@ -55,11 +55,11 @@ function getprods()
     }
 }
 
-function getprodsbycat($category)
+function getprodsbycat($category, $limit, $offset)
 {
     global $dbhandle;
 
-    $sql = "SELECT * FROM produkte WHERE kategorie = '$category' LIMIT 6 OFFSET 0";
+    $sql = "SELECT * FROM produkte WHERE kategorie = '$category' LIMIT $limit OFFSET $offset";
     $result = $dbhandle->query($sql);
 
     if ($result && $result->num_rows > 0) {
