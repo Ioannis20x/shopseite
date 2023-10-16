@@ -17,7 +17,7 @@
         <div id='backbutton'>
             <?php
             $prodid = $_GET['prodid'];
-                $backpage = ($prodid / 6) + $prodid % 2;
+            $backpage = ($prodid / 6) + $prodid % 2;
             var_dump(intval($backpage));
             echo '<a href="./index.php?page=' . intval($backpage) . '">&#706; zurück</a>';
             ?>
@@ -50,9 +50,28 @@
                                 <h1>' . $row["preis"] . '€</h1>
                         </div>';
 
+                    $heutigesDatum = new DateTime();
+                    $zukuenftigesDatum = clone $heutigesDatum;
+                    $lz = (int)$row["lieferzeit"];
+                    $zukuenftigesDatum->modify("+$lz days");
+                    
+
+                    // Deutsche Wochentage und Monate
+                    $deutscheWochentage = [
+                        'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'
+                    ];
+
+                    $deutscheMonate = [
+                       '', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+                    ];
+
+                    // Das zukünftige Datum im deutschen Format anzeigen
+                    $lieferzeit = $deutscheWochentage[$zukuenftigesDatum->format('w')] . ', ' . $zukuenftigesDatum->format('j') . '. ' . $deutscheMonate[(int)$zukuenftigesDatum->format('n')] ;
                     echo '<div id="versand">
                          <h2>Versand</h2>
-                        <h1>Lieferung in ' . $row["lieferzeit"] . ' Tagen</h1>
+                         
+                        <h1>Lieferung bis ' . $lieferzeit . '</h1>
                     </div>';
 
                     echo '<div id="lager">
