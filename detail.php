@@ -19,7 +19,7 @@
             $prodid = $_GET['prodid'];
             $backpage = ($prodid / 6) + $prodid % 2;
             var_dump(intval($backpage));
-            echo '<a id="back" href="./index.php?page='.$page.'" >&#706; zurück</a>';
+            echo '<a id="back" href="./index.php?page=1" >&#706; zurück</a>';
             ?>
         </div>
         <?php
@@ -28,11 +28,11 @@
         if (isset($_GET["prodid"])) {
             $prodid = $_GET['prodid'];
 
-            $sql = "SELECT * FROM produkte WHERE id = " . $prodid;
+            $sql = "SELECT * FROM produkte WHERE id = " . $prodid. " LIMIT 5";
 
             $result = $dbhandle->query($sql);
             if (!$result) {
-                die('SQL-Fehler: ' . mysqli_error($conn));
+                die('SQL-Fehler: ' . mysqli_error($dbhandle));
             }
             if ($result && $result->num_rows == 1) {
                 while ($row = $result->fetch_assoc()) {
@@ -91,7 +91,7 @@
             }
 
             $produktid = $_GET["prodid"];
-            $sql1 = "SELECT * FROM mapping WHERE produktid = $produktid";
+            $sql1 = "SELECT * FROM mapping WHERE produktid = $produktid LIMIT 6";
             $ergebnis1 = $dbhandle->query($sql1);
 
             if ($ergebnis1) {

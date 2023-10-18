@@ -34,27 +34,29 @@ if (isset($_GET['suchbegriff'])) {
 }
 */
 
+
+
 function buildprodquery($filters) {
-    $offset = (6 * $_GET["page"]) - 6;
-    $sql = "SELECT * FROM produkte WHERE 1=1 LIMIT 6 OFFSET $offset";
-
+    $sql = "SELECT * FROM produkte WHERE 1";
+    if(isset($_GET["page"]))
+    {$offset = (6 * $_GET["page"]) - 6;
     if (isset($filters['suchbegriff'])) {
-        $sql .= " AND produkt LIKE '%" . $filters['suchbegriff'] . "%'";
+        $sql .= " AND produktname LIKE '%" . $filters['suchbegriff'] . "%'";
     }
-
+    
     if (isset($filters['kategorien'])) {
-        $sql .= " AND kategorie IN ('" . implode("','", $filters['kategorien']) . "')";
+        $categories = implode("','", $filters['kategorien']);
+        $sql .= " AND kategorie IN ('$categories')";
     }
-
+    
     if (isset($filters['prices'])) {
-        $priceConditions = explode("-", $filters['prices']);
-        $sql .= " AND preis >= " . $priceConditions[0] . " AND preis <= " . $priceConditions[1]."LIMIT 6 OFFSET 1";
+        $priceRange = $filters['prices'];
+        list($minPrice, $maxPrice) = explode("-", $priceRange);
+        $sql .= " AND preis BETWEEN $minPrice AND $maxPrice";
     }
+    $sql .=" LIMIT 6 OFFSET ".$offset;
 
     return $sql;
 }
-
+}
 // Weitere Filterfunktionen hinzufügen
-?>
-
-

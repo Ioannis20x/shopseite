@@ -104,7 +104,6 @@
             echo "</div>";
             echo "</a>";
         }
-        /* 
         if (isset($_GET["page"])) {
             $offset = (6 * $_GET["page"]) - 6;
             if ($_GET["page"] > 1) {
@@ -121,7 +120,31 @@
             $sql = "SELECT * FROM produkte LIMIT 6 OFFSET 0";
             $result = $dbhandle->query($sql);
         }
+/*
 
+<?php
+
+function buildprodquery($filters) {
+    $sql = "SELECT * FROM produkte WHERE 1";
+    
+    if (isset($filters['suchbegriff'])) {
+        $sql .= " AND produktname LIKE '%" . $filters['suchbegriff'] . "%'";
+    }
+    
+    if (isset($filters['kategorien'])) {
+        $categories = implode("','", $filters['kategorien']);
+        $sql .= " AND kategorie IN ('$categories')";
+    }
+    
+    if (isset($filters['prices'])) {
+        $priceRange = $filters['prices'];
+        list($minPrice, $maxPrice) = explode("-", $priceRange);
+        $sql .= " AND preis BETWEEN $minPrice AND $maxPrice";
+    }
+
+    return $sql;
+}
+?>
 
         if (isset($_GET["kategorie"])) {
             $sql = "SELECT * FROM produkte WHERE id =1";
@@ -129,7 +152,7 @@
             $kat = mysqli_fetch_assoc($result);
             print_r($kat);
         }
-
+        
         if (!isset($_GET["suchbegriff"])) {
             if ($result && $result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
@@ -153,7 +176,7 @@
                 echo "Keine Daten gefunden.";
             }
         }
-*/
+        */
         ?>
     </div>
 
