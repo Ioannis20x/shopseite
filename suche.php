@@ -41,14 +41,14 @@ function buildprodquery($filters) {
     if(isset($_GET["page"]))
     {$offset = (6 * $_GET["page"]) - 6;
     if (isset($filters['suchbegriff'])) {
-        $sql .= " AND produktname LIKE '%" . $filters['suchbegriff'] . "%'";
+        $sql .= " AND produkt LIKE '%" . $filters['suchbegriff'] . "%'";
     }
-    
+    /*
     if (isset($filters['kategorien'])) {
         $categories = implode("','", $filters['kategorien']);
         $sql .= " AND kategorie IN ('$categories')";
     }
-    
+    */
     if (isset($filters['prices'])) {
         $priceRange = $filters['prices'];
         list($minPrice, $maxPrice) = explode("-", $priceRange);

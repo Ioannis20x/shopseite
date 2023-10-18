@@ -28,7 +28,7 @@
         if (isset($_GET["prodid"])) {
             $prodid = $_GET['prodid'];
 
-            $sql = "SELECT * FROM produkte WHERE id = " . $prodid. " LIMIT 5";
+            $sql = "SELECT * FROM produkte WHERE id = " . $prodid . " LIMIT 5";
 
             $result = $dbhandle->query($sql);
             if (!$result) {
@@ -38,9 +38,14 @@
                 while ($row = $result->fetch_assoc()) {
                     $produktname = $row["produkt"];
                     $preis = number_format($row["preis"], 2, ',', '.');
-                    echo '<div id="prodbild">
-                        <img src="./alle_produkte/' . $row["dateiname"] . '" alt="">
-                    </div>';
+                    echo '<div id="prodbild">';
+                    if($row["lager"] == 0){
+                        echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '" alt="">';
+                    }else{
+                        echo '<img src="./alle_produkte/' . $row["dateiname"] . '" alt="">';
+                    }
+                    
+                    echo '</div>';
 
                     echo '<div id="details">
                         <h1 id="prodname">' . $row["produkt"] . '</h1>';
@@ -78,10 +83,11 @@
                         <h2>Lagerbestand</h2>';
                     if ($row["lager"] == 0) {
                         echo '<h1 class="sold">AUSVERKAUFT</h1>';
+                        echo '</div>';
                     } else {
                         echo '<h1>' . $row["lager"] . ' Stück auf Lager </h1>.';
+                        echo '</div>';
                     }
-                    echo '</div>';
                     echo '<form action="./kauf.html">
                          <button id="kaufbutton" type="submit">Kaufen</button>
                     </form>
@@ -116,7 +122,12 @@
                         echo '<h1>' . $row["produkt"] . '</h1>';
                         echo '<h2>' . $row["preis"] . '€</h1>';
                         echo "</div>";
-                        echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
+                        if($row["lager"] == 0){
+                            echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '">';
+                        }else{
+                            echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
+                        }
+                        
                         echo "</div>";
                         echo "</a>";
                     }
@@ -137,7 +148,12 @@
                             echo '<h1>' . $row["produkt"] . '</h1>';
                             echo '<h2>' . $row["preis"] . '€</h1>';
                             echo "</div>";
-                            echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
+                            if($row["lager"] == 0){
+                            echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '">';
+                            }
+                            else{
+                                echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
+                            }
                             echo "</div>";
                         }
                         echo "</div>";
@@ -159,7 +175,7 @@
     const back = document.getElementById("back");
     back.onclick = () => {
         let page = localStorage.get("page");
-        window.location = "./index.php?page="+page;
+        window.location = "./index.php?page=" + page;
     }
 </script>
 
