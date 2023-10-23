@@ -15,12 +15,7 @@
 <body>
     <div id='oben'>
         <div id='backbutton'>
-            <?php
-            $prodid = $_GET['prodid'];
-            $backpage = ($prodid / 6) + $prodid % 2;
-            var_dump(intval($backpage));
-            echo '<a id="back" href="./index.php?page=1" >&#706; zurück</a>';
-            ?>
+            <a id="back" href="./index.php?page=1" >&#706; zurück</a>
         </div>
         <?php
         include_once "db.php";

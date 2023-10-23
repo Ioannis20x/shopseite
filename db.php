@@ -31,12 +31,16 @@ function dbaction($handle, $query)
 function prodaction($sql)
 {
     global $dbhandle;
-    $result = $dbhandle->query($sql);
+    if ($sql) {
+        $result = $dbhandle->query($sql);
 
-    if ($result && $result->num_rows > 0) {
-        return $result->fetch_all(MYSQLI_ASSOC);
-    } else {
-        return array();
+        if ($result && $result->num_rows > 0) {
+            echo "true";
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } else {
+            echo "false";
+            return array();
+        }
     }
 }
 
