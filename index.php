@@ -49,10 +49,10 @@
         <div id="pricefilter">
             <select name="prices" id="prices" onchange="this.form.submit()">
                 <option value="" selected>Preisspanne wählen...</option>
-                <option value="100" value="Select * From produkte Where preis > 0 and preis > 100">0€ - 100€</option>
-                <option value="500">100€ - 500€</option>
-                <option value="1000">500€ - 1000€</option>
-                <option value="2000">100€ - 2000€</option>
+                <option value="0-100">0€ - 100€</option>
+                <option value="100-500">100€ - 500€</option>
+                <option value="500-1000">500€ - 1000€</option>
+                <option value="100-2000">100€ - 2000€</option>
             </select>
         </div>
         </form>
@@ -115,36 +115,13 @@
                 $sql = "SELECT * FROM produkte LIMIT 6 OFFSET 0";
                 $result = $dbhandle->query($sql);
             }
-        } else {
-            //echo $offset;
-            $sql = "SELECT * FROM produkte LIMIT 6 OFFSET 0";
-            $result = $dbhandle->query($sql);
+        } else if(!isset($_GET["prices"]) || !isset($_GET["suchbegriff"]) ){
+
+        }else{
+            header("Location: ./index.php?page=1");
         }
-/*
+        /*
 
-<?php
-
-function buildprodquery($filters) {
-    $sql = "SELECT * FROM produkte WHERE 1";
-    
-    if (isset($filters['suchbegriff'])) {
-        $sql .= " AND produktname LIKE '%" . $filters['suchbegriff'] . "%'";
-    }
-    
-    if (isset($filters['kategorien'])) {
-        $categories = implode("','", $filters['kategorien']);
-        $sql .= " AND kategorie IN ('$categories')";
-    }
-    
-    if (isset($filters['prices'])) {
-        $priceRange = $filters['prices'];
-        list($minPrice, $maxPrice) = explode("-", $priceRange);
-        $sql .= " AND preis BETWEEN $minPrice AND $maxPrice";
-    }
-
-    return $sql;
-}
-?>
 
         if (isset($_GET["kategorie"])) {
             $sql = "SELECT * FROM produkte WHERE id =1";
@@ -190,11 +167,11 @@ function buildprodquery($filters) {
     <script>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-    var product = document.getElementsByClassName("grid-item");
-    product.onclick = ()=>{
-        localstorage.setItem("page",urlParams.get("page"));
-    }
-</script>
+        var product = document.getElementsByClassName("grid-item");
+        product.onclick = () => {
+            localstorage.setItem("page", urlParams.get("page"));
+        }
+    </script>
 </body>
 
 </html>

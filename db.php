@@ -35,10 +35,10 @@ function prodaction($sql)
         $result = $dbhandle->query($sql);
 
         if ($result && $result->num_rows > 0) {
-            echo "true";
+            //echo "true";
             return $result->fetch_all(MYSQLI_ASSOC);
         } else {
-            echo "false";
+            //echo "false";
             return array();
         }
     }
