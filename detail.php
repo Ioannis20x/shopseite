@@ -115,7 +115,8 @@
                         echo '<div class="vprod">
                             <div class="vprodinfo">';
                         echo '<h1>' . $row["produkt"] . '</h1>';
-                        echo '<h2>' . $row["preis"] . '€</h1>';
+                        $preis = number_format($row["preis"], 2, ',', '.');
+                        echo '<h2>' . $preis . '€</h2>';
                         echo "</div>";
                         if($row["lager"] == 0){
                             echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '">';

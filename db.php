@@ -27,21 +27,36 @@ function dbaction($handle, $query)
     }
 }
 
+function prodaction($sql) {
+    global $dbhandle; // Hinzugefügt, um auf die globale Datenbankverbindung zuzugreifen
 
-function prodaction($sql)
-{
-    global $dbhandle;
-    if ($sql) {
-        $result = $dbhandle->query($sql);
+    $result = $dbhandle->query($sql);
 
-        if ($result && $result->num_rows > 0) {
-            //echo "true";
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            //echo "false";
-            return array();
+    $produkte = array();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $produkte[] = $row;
         }
     }
+
+    return $produkte;
+}
+
+function getCategoriesFromMapping() {
+    global $dbhandle;
+
+    $categories = array();
+    $sql = "SELECT DISTINCT kategorie FROM mapping";
+    $result = $dbhandle->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $categories[] = $row;
+        }
+    }
+
+    return $categories;
 }
 
 

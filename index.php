@@ -16,46 +16,55 @@
 <body>
 
     <div id="filter">
-        <div id="suche">
-            <form method="GET" id="filter-form">
+
+        <form method="GET" action="index.php" id="filter-form">
+            <!-- Suchbegriff -->
+            <div id="suche">
 
                 <input type="search" name="suchbegriff" id="suchleiste" placeholder="Suchen...">
                 <button type="submit">
                     <span class="material-symbols-outlined">search</span>
                 </button>
 
-        </div>
-        <h2 id="h2kat">Kategorien</h2>
-
-        <div id="checkboxen">
-            <div id="kategorien">
-                <?php
-                include_once "db.php";
-                include_once "suche.php";
-                $filter = array();
-
-                $sql = "SELECT * FROM kategorien";
-                $result = $dbhandle->query($sql);
-                if ($result && $result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<label><input type='checkbox' name='geraet' value='" . $row['kategorie'] . "'/>" . $row['kategorie'] . "</label>";
-                    }
-                }
-
-                ?>
             </div>
-        </div>
-        <h2 id="h2price">Preis</h2>
-        <div id="pricefilter">
-            <select name="prices" id="prices" onchange="this.form.submit()">
-                <option value="" selected>Preisspanne wählen...</option>
-                <option value="0-100">0€ - 100€</option>
-                <option value="100-500">100€ - 500€</option>
-                <option value="500-1000">500€ - 1000€</option>
-                <option value="100-2000">100€ - 2000€</option>
-            </select>
-        </div>
+            <!-- Kategorien (mehrere Auswahlmöglichkeiten) -->
+            <h2 id="h2kat">Kategorien</h2>
+            <div id="checkboxen">
+                <div id="kategorien">
+                    <?php
+                    include_once "db.php";
+                    $selectedCategories = array();
+
+                    if (isset($_GET['kategorie']) && is_array($_GET['kategorie'])) {
+                        $selectedCategories = $_GET['kategorie'];
+                    }
+
+                    $sql = "SELECT kategorie FROM kategorien";
+                    $result = $dbhandle->query($sql);
+                    if ($result && $result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $checkboxName = 'kategorie[]';
+                            $isChecked = in_array($row['kategorie'], $selectedCategories) ? 'checked' : '';
+                            echo "<label><input type='checkbox' name='$checkboxName' value='" . $row['kategorie'] . "' $isChecked />" . $row['kategorie'] . "</label>";
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <!-- Preisspannen -->
+            <h2 id="h2price">Preis</h2>
+            <div id="pricefilter">
+                <select name="prices" id="prices" onchange="this.form.submit()">
+                    <option value="" selected>Preisspanne wählen...</option>
+                    <option value="0-100">0€ - 100€</option>
+                    <option value="100-500">100€ - 500€</option>
+                    <option value="500-1000">500€ - 1000€</option>
+                    <option value="100-2000">100€ - 2000€</option>
+                </select>
+            </div>
         </form>
+
     </div>
 
     <div class="grid-container">
@@ -64,26 +73,27 @@
         include_once "import.php";
         include_once "suche.php";
 
-        // Verbindungsdaten zur Datenbank
-        $servername = 'localhost';
-        $username = 'root';
-        $password = '';
-        $dbname = 'shopseite';
-
+        $filters = array();
 
         if (isset($_GET['suchbegriff'])) {
             $filters['suchbegriff'] = $_GET['suchbegriff'];
         }
 
-        if (isset($_GET['geraet'])) {
-            $filters['kategorien'] = $_GET['geraet'];
+        if (isset($_GET['kategorie'])) {
+            $filters['kategorien'] = $_GET['kategorie'];
         }
 
         if (isset($_GET['prices'])) {
             $filters['prices'] = $_GET['prices'];
         }
 
-        $sql = buildprodquery($filter);
+        if (!empty($filters)) {
+            $sql = buildprodquery($filters);
+        } else {
+            // Wenn keine Filter aktiv sind, standardmäßig nur 6 Produkte pro Seite anzeigen
+            $offset = (6 * $_GET["page"]) - 6;
+            $sql = "SELECT * FROM produkte LIMIT 6 OFFSET ".$offset;
+        }
 
         $produkte = prodaction($sql);
 
@@ -104,56 +114,6 @@
             echo "</div>";
             echo "</a>";
         }
-        if (isset($_GET["page"])) {
-            $offset = (6 * $_GET["page"]) - 6;
-            if ($_GET["page"] > 1) {
-                $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
-                $result = $dbhandle->query($sql);
-                //echo $offset;
-            } else {
-                //echo $offset;
-                $sql = "SELECT * FROM produkte LIMIT 6 OFFSET 0";
-                $result = $dbhandle->query($sql);
-            }
-        } else if(!isset($_GET["prices"]) || !isset($_GET["suchbegriff"]) ){
-
-        }else{
-            header("Location: ./index.php?page=1");
-        }
-        /*
-
-
-        if (isset($_GET["kategorie"])) {
-            $sql = "SELECT * FROM produkte WHERE id =1";
-            $result = $dbhandle->query($sql);
-            $kat = mysqli_fetch_assoc($result);
-            print_r($kat);
-        }
-        
-        if (!isset($_GET["suchbegriff"])) {
-            if ($result && $result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $preis = number_format($row["preis"], 2, ',', '.');
-                    echo '<a href="detail.php?prodid=' . $row["id"] . '">';
-                    echo "<div class='grid-item'>";
-                    echo "<h1 class='prodname'>";
-                    echo $row["produkt"];
-                    echo "</h1>";
-                    echo "<h2 class='price'>$preis €</h2>";
-                    if ($row["lager"] == 0) {
-                        echo "<h1 id='soldindex' class='sold'>AUSVERKAUFT</h1>";
-                        echo '<img class="grau" src="' . './alle_produkte/' . $row["dateiname"] . '">';
-                    } else {
-                        echo '<img draggable="false" src="' . './alle_produkte/' . $row["dateiname"] . '">';
-                    }
-                    echo "</div>";
-                    echo "</a>";
-                }
-            } else {
-                echo "Keine Daten gefunden.";
-            }
-        }
-        */
         ?>
     </div>
 
@@ -164,14 +124,6 @@
         <a href="http://localhost/shop/?page=4"><button class="pagebtn">4</button></a>
     </div>
 
-    <script>
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        var product = document.getElementsByClassName("grid-item");
-        product.onclick = () => {
-            localstorage.setItem("page", urlParams.get("page"));
-        }
-    </script>
 </body>
 
 </html>
