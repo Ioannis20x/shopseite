@@ -45,7 +45,7 @@
                         while ($row = $result->fetch_assoc()) {
                             $checkboxName = 'kategorie[]';
                             $isChecked = in_array($row['kategorie'], $selectedCategories) ? 'checked' : '';
-                            echo "<label><input type='checkbox' name='$checkboxName' value='" . $row['kategorie'] . "' $isChecked />" . $row['kategorie'] . "</label>";
+                            echo "<label><input type='checkbox' onchange='this.form.submit()' name='$checkboxName' value='" . $row['kategorie'] . "' $isChecked />" . $row['kategorie'] . "</label>";
                         }
                     }
                     ?>
@@ -60,7 +60,7 @@
                     <option value="0-100">0€ - 100€</option>
                     <option value="100-500">100€ - 500€</option>
                     <option value="500-1000">500€ - 1000€</option>
-                    <option value="100-2000">100€ - 2000€</option>
+                    <option value="1000-2000">1000€ - 2000€</option>
                 </select>
             </div>
         </form>
@@ -80,7 +80,7 @@
         }
 
         if (isset($_GET['kategorie'])) {
-            $filters['kategorien'] = $_GET['kategorie'];
+            $filters['kategorie'] = $_GET['kategorie'];
         }
 
         if (isset($_GET['prices'])) {
@@ -92,11 +92,16 @@
         } else {
             // Wenn keine Filter aktiv sind, standardmäßig nur 6 Produkte pro Seite anzeigen
             $offset = (6 * $_GET["page"]) - 6;
-            $sql = "SELECT * FROM produkte LIMIT 6 OFFSET ".$offset;
+            $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
         }
 
+        if (!isset($_GET["page"]) && empty($filters)) {
+            header('Location: ./index.php?page=1');
+        }
+        
         $produkte = prodaction($sql);
-
+        if(count($produkte)>0){
+        
         foreach ($produkte as $produkt) {
             $preis = number_format($produkt["preis"], 2, ',', '.');
             echo '<a href="detail.php?prodid=' . $produkt["id"] . '">';
@@ -114,6 +119,9 @@
             echo "</div>";
             echo "</a>";
         }
+    }else{
+        echo "Keine Produkte gefunden";
+    }
         ?>
     </div>
 

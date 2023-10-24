@@ -9,18 +9,17 @@ function buildprodquery($filters)
         $sql .= " AND produkt LIKE '%" . $filters['suchbegriff'] . "%'";
     }
 
-    if (isset($filters['kategorie'])) {
-        $selectedCategories = $filters['kategorie'];
-        if (!empty($selectedCategories)) {
-            $categoryFilter = "'" . implode("', '", $selectedCategories) . "'";
-            $categoryQuery = "SELECT id FROM kategorien WHERE kategorie IN ($categoryFilter)";
-            $sql .= " AND kategorie IN (SELECT produktid FROM mapping WHERE kategorieid IN ($categoryQuery))";
-            echo "kategorie:<br>";
-            echo $sql;
-        }
+    if (isset($filters['kategorie']) && is_array($filters['kategorie'])) {
+        $categoryFilter = "'" . implode("', '", $filters['kategorie']) . "'";
+        $sql .= " AND id IN (SELECT produktid FROM mapping WHERE kategorieid IN (SELECT id FROM kategorien WHERE kategorie IN ($categoryFilter)))";
     }
 
     if (isset($filters['prices'])) {
+        list($minPrice, $maxPrice) = explode('-', $filters['prices']);
+        $sql .= " AND preis BETWEEN $minPrice AND $maxPrice";
+    } else {
+        $minPrice = 0;
+        $maxPrice = 3001;
         list($minPrice, $maxPrice) = explode('-', $filters['prices']);
         $sql .= " AND preis BETWEEN $minPrice AND $maxPrice";
     }
