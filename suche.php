@@ -18,11 +18,13 @@ function buildprodquery($filters)
         list($minPrice, $maxPrice) = explode('-', $filters['prices']);
         $sql .= " AND preis BETWEEN $minPrice AND $maxPrice";
     } else {
+        // Wenn keine Preisspanne ausgewählt ist, verwende Standardwerte
         $minPrice = 0;
-        $maxPrice = 3001;
-        list($minPrice, $maxPrice) = explode('-', $filters['prices']);
+        $maxPrice = 10000; // Hier kannst du den Standardwert anpassen
         $sql .= " AND preis BETWEEN $minPrice AND $maxPrice";
     }
+
+
 
     return $sql;
 }

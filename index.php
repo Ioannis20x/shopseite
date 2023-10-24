@@ -98,30 +98,30 @@
         if (!isset($_GET["page"]) && empty($filters)) {
             header('Location: ./index.php?page=1');
         }
-        
+
         $produkte = prodaction($sql);
-        if(count($produkte)>0){
-        
-        foreach ($produkte as $produkt) {
-            $preis = number_format($produkt["preis"], 2, ',', '.');
-            echo '<a href="detail.php?prodid=' . $produkt["id"] . '">';
-            echo "<div class='grid-item'>";
-            echo "<h1 class='prodname'>";
-            echo $produkt["produkt"];
-            echo "</h1>";
-            echo "<h2 class='price'>$preis €</h2>";
-            if ($produkt["lager"] == 0) {
-                echo "<h1 id='soldindex' class='sold'>AUSVERKAUFT</h1>";
-                echo '<img class="grau" src="' . './alle_produkte/' . $produkt["dateiname"] . '">';
-            } else {
-                echo '<img draggable="false" src="' . './alle_produkte/' . $produkt["dateiname"] . '">';
+        if (count($produkte) > 0) {
+
+            foreach ($produkte as $produkt) {
+                $preis = number_format($produkt["preis"], 2, ',', '.');
+                echo '<a href="detail.php?prodid=' . $produkt["id"] . '">';
+                echo "<div class='grid-item'>";
+                echo "<h1 class='prodname'>";
+                echo $produkt["produkt"];
+                echo "</h1>";
+                echo "<h2 class='price'>$preis €</h2>";
+                if ($produkt["lager"] == 0) {
+                    echo "<h1 id='soldindex' class='sold'>AUSVERKAUFT</h1>";
+                    echo '<img class="grau" src="' . './alle_produkte/' . $produkt["dateiname"] . '">';
+                } else {
+                    echo '<img draggable="false" src="' . './alle_produkte/' . $produkt["dateiname"] . '">';
+                }
+                echo "</div>";
+                echo "</a>";
             }
-            echo "</div>";
-            echo "</a>";
+        } else {
+            echo "Keine Produkte gefunden";
         }
-    }else{
-        echo "Keine Produkte gefunden";
-    }
         ?>
     </div>
 
