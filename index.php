@@ -56,12 +56,13 @@
             <h2 id="h2price">Preis</h2>
             <div id="pricefilter">
                 <select name="prices" id="prices" onchange="this.form.submit()">
-                    <option value="" selected>Preisspanne wählen...</option>
-                    <option value="0-100">0€ - 100€</option>
-                    <option value="100-500">100€ - 500€</option>
-                    <option value="500-1000">500€ - 1000€</option>
-                    <option value="1000-2000">1000€ - 2000€</option>
+                    <option value="0-3000" <?php echo isset($_GET['prices']) && $_GET['prices'] === '0-3000' ? 'selected' : ''; ?>>Preisspanne wählen...</option>
+                    <option value="0-100" <?php echo isset($_GET['prices']) && $_GET['prices'] === '0-100' ? 'selected' : ''; ?>>0€ - 100€</option>
+                    <option value="100-500" <?php echo isset($_GET['prices']) && $_GET['prices'] === '100-500' ? 'selected' : ''; ?>>100€ - 500€</option>
+                    <option value="500-1000" <?php echo isset($_GET['prices']) && $_GET['prices'] === '500-1000' ? 'selected' : ''; ?>>500€ - 1000€</option>
+                    <option value="1000-2000" <?php echo isset($_GET['prices']) && $_GET['prices'] === '1000-2000' ? 'selected' : ''; ?>>1000€ - 2000€</option>
                 </select>
+
             </div>
         </form>
 
