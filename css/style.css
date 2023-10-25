@@ -1,3 +1,8 @@
+body{
+    margin-top: 0   ;
+}
+
+
 /*DETEILANSICHT*/
 #prodbild img {
     width: 500px;
