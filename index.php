@@ -119,8 +119,6 @@
                 }
                 echo "</div>";
                 echo "</a>";
-                
-
             }
             echo " </div>";
             echo '    <div id="seiten">
@@ -133,9 +131,9 @@
             echo "Keine Produkte gefunden";
             echo " </div>";
         }
-        
+
         ?>
-   
+
 
 
 
