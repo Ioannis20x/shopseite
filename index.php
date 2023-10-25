@@ -119,19 +119,25 @@
                 }
                 echo "</div>";
                 echo "</a>";
+                
+
             }
+            echo " </div>";
+            echo '    <div id="seiten">
+            <a href="http://localhost/shop/?page=1"><button class="pagebtn">1</button></a>
+            <a href="http://localhost/shop/?page=2"><button class="pagebtn">2</button></a>
+            <a href="http://localhost/shop/?page=3"><button class="pagebtn">3</button></a>
+            <a href="http://localhost/shop/?page=4"><button class="pagebtn">4</button></a>
+        </div>';
         } else {
             echo "Keine Produkte gefunden";
+            echo " </div>";
         }
+        
         ?>
-    </div>
+   
 
-    <div id="seiten">
-        <a href="http://localhost/shop/?page=1"><button class="pagebtn">1</button></a>
-        <a href="http://localhost/shop/?page=2"><button class="pagebtn">2</button></a>
-        <a href="http://localhost/shop/?page=3"><button class="pagebtn">3</button></a>
-        <a href="http://localhost/shop/?page=4"><button class="pagebtn">4</button></a>
-    </div>
+
 
 </body>
 
