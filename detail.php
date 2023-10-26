@@ -169,12 +169,5 @@
         ?>
     </div>
 </body>
-<script>
-    const back = document.getElementById("back");
-    back.onclick = () => {
-        let page = localStorage.get("page");
-        window.location = "./index.php?page=" + page;
-    }
-</script>
 
 </html>
