@@ -15,7 +15,7 @@
 <body>
     <div id='oben'>
         <div id='backbutton'>
-            <a id="back" href="./index.php?page=1" >&#706; zurück</a>
+            <a id="back" href="./index.php?page=1">&#706; zurück</a>
         </div>
         <?php
         include_once "db.php";
@@ -34,12 +34,12 @@
                     $produktname = $row["produkt"];
                     $preis = number_format($row["preis"], 2, ',', '.');
                     echo '<div id="prodbild">';
-                    if($row["lager"] == 0){
+                    if ($row["lager"] == 0) {
                         echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '" alt="">';
-                    }else{
+                    } else {
                         echo '<img src="./alle_produkte/' . $row["dateiname"] . '" alt="">';
                     }
-                    
+
                     echo '</div>';
 
                     echo '<div id="details">
@@ -98,13 +98,16 @@
             if ($ergebnis1) {
                 $row = $ergebnis1->fetch_assoc();
                 $kategorieid = $row['kategorieid'];
+                $produktid = $_GET["prodid"];
+                $rand = "ORDER BY RAND()";
 
                 $sql2 = "SELECT * FROM produkte
-                     JOIN mapping ON produkte.id = mapping.produktid
-                     WHERE mapping.kategorieid = $kategorieid AND produkte.id <> $produktid
-                     LIMIT 5";
+                JOIN mapping ON produkte.id = mapping.produktid
+                WHERE (mapping.kategorieid = $kategorieid OR produkte.produkt LIKE '%$produktname%')
+                AND produkte.id <> $produktid
+                $rand
+                LIMIT 5";
                 $ergebnis2 = $dbhandle->query($sql2);
-
                 if ($ergebnis2 && $ergebnis2->num_rows > 0) {
 
                     echo '<div id="unten">';
@@ -118,12 +121,12 @@
                         $preis = number_format($row["preis"], 2, ',', '.');
                         echo '<h2>' . $preis . '€</h2>';
                         echo "</div>";
-                        if($row["lager"] == 0){
+                        if ($row["lager"] == 0) {
                             echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '">';
-                        }else{
+                        } else {
                             echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
                         }
-                        
+
                         echo "</div>";
                         echo "</a>";
                     }
@@ -144,10 +147,9 @@
                             echo '<h1>' . $row["produkt"] . '</h1>';
                             echo '<h2>' . $row["preis"] . '€</h1>';
                             echo "</div>";
-                            if($row["lager"] == 0){
-                            echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '">';
-                            }
-                            else{
+                            if ($row["lager"] == 0) {
+                                echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '">';
+                            } else {
                                 echo '<img src="./alle_produkte/' . $row["dateiname"] . '">';
                             }
                             echo "</div>";
