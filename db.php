@@ -27,7 +27,8 @@ function dbaction($handle, $query)
     }
 }
 
-function prodaction($sql) {
+function prodaction($sql)
+{
     global $dbhandle; // Hinzugefügt, um auf die globale Datenbankverbindung zuzugreifen
 
     $result = $dbhandle->query($sql);
@@ -43,7 +44,8 @@ function prodaction($sql) {
     return $produkte;
 }
 
-function getCategoriesFromMapping() {
+function getCategoriesFromMapping()
+{
     global $dbhandle;
 
     $categories = array();
@@ -85,5 +87,18 @@ function getprodsbycat($category, $limit, $offset)
         return $result->fetch_all(MYSQLI_ASSOC);
     } else {
         return array();
+    }
+}
+function countProducts($filters)
+{
+    global $dbhandle;
+
+    $sql = buildprodquery($filters);
+    $result = $dbhandle->query($sql);
+
+    if ($result && $result->num_rows > 0) {
+        return $result->num_rows;
+    } else {
+        return 0;
     }
 }
