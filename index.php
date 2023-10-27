@@ -14,11 +14,8 @@
 </head>
 
 <body>
-
     <div id="filter">
-
         <form method="GET" action="index.php" id="filter-form">
-            <!-- Suchbegriff -->
             <div id="suche">
 
                 <input type="search" name="suchbegriff" id="suchleiste" placeholder="Suchen...">
@@ -65,14 +62,19 @@
 
             </div>
         </form>
-
     </div>
 
     <div class="grid-container">
         <?php
+
         include_once "db.php";
         include_once "import.php";
         include_once "suche.php";
+
+        $products_per_page = 6; // Anzahl der Produkte pro Seite
+        $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1; // Aktuelle Seite
+
+        $offset = ($page - 1) * $products_per_page;
 
         $filters = array();
 
@@ -89,20 +91,14 @@
         }
 
         if (!empty($filters)) {
-            $sql = buildprodquery($filters);
+            $sql = buildprodquery($filters) . " LIMIT $products_per_page OFFSET $offset";
         } else {
             // Wenn keine Filter aktiv sind, standardmäßig nur 6 Produkte pro Seite anzeigen
-            $offset = (6 * $_GET["page"]) - 6;
-            $sql = "SELECT * FROM produkte LIMIT 6 OFFSET " . $offset;
-        }
-
-        if (!isset($_GET["page"]) && empty($filters)) {
-            header('Location: ./index.php?page=1');
+            $sql = "SELECT * FROM produkte LIMIT $products_per_page OFFSET $offset";
         }
 
         $produkte = prodaction($sql);
         if (count($produkte) > 0) {
-
             foreach ($produkte as $produkt) {
                 $preis = number_format($produkt["preis"], 2, ',', '.');
                 echo '<a href="detail.php?prodid=' . $produkt["id"] . '">';
@@ -120,23 +116,25 @@
                 echo "</div>";
                 echo "</a>";
             }
-            echo " </div>";
-            echo '    <div id="seiten">
-            <a href="http://localhost/shop/?page=1"><button class="pagebtn">1</button></a>
-            <a href="http://localhost/shop/?page=2"><button class="pagebtn">2</button></a>
-            <a href="http://localhost/shop/?page=3"><button class="pagebtn">3</button></a>
-            <a href="http://localhost/shop/?page=4"><button class="pagebtn">4</button></a>
-        </div>';
+            echo "</div>";
+            // Pagination-Links generieren
+            $total_products = count($produkte);
+            $total_pages = ceil($total_products / $products_per_page);
+
+            echo '<div id="seiten">';
+            for ($i = 1; $i <= $total_pages; $i++) {
+                echo '<a href="index.php?page=' . $i . '"><button class="pagebtn">' . $i . '</button></a>';
+            }
+
+            echo '</div>';
         } else {
             echo "Keine Produkte gefunden";
-            echo " </div>";
         }
 
+
+
         ?>
-
-
-
-
+    </div>
 </body>
 
 </html>
