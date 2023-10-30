@@ -141,11 +141,13 @@
                         echo '<div id="unten">';
                         echo '<h1 id="vortit">Ähnliche Produkte</h1>';
                         echo '<div id="vorschl">';
+                        
                         while ($row = $ergebnis3->fetch_assoc()) {
+                            $preis = number_format($produkt["preis"], 2, ',', '.');
                             echo '<div class="vprod">
                                 <div class="vprodinfo">';
                             echo '<h1>' . $row["produkt"] . '</h1>';
-                            echo '<h2>' . $row["preis"] . '€</h1>';
+                            echo '<h2>' . $preis . '€</h1>';
                             echo "</div>";
                             if ($row["lager"] == 0) {
                                 echo '<img class="grau" src="./alle_produkte/' . $row["dateiname"] . '">';

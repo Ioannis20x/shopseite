@@ -49,7 +49,6 @@
                 </div>
             </div>
 
-            <!-- Preisspannen -->
             <h2 id="h2price">Preis</h2>
             <div id="pricefilter">
                 <select name="prices" id="prices" onchange="this.form.submit()">
@@ -71,10 +70,10 @@
         include_once "import.php";
         include_once "suche.php";
 
-        $products_per_page = 6; // Anzahl der Produkte pro Seite
-        $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1; // Aktuelle Seite
+        $prodsproseite = 6;
+        $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
 
-        $offset = ($page - 1) * $products_per_page;
+        $offset = ($page - 1) * $prodsproseite;
 
         $filters = array();
 
@@ -91,10 +90,9 @@
         }
 
         if (!empty($filters)) {
-            $sql = buildprodquery($filters) . " LIMIT $products_per_page OFFSET $offset";
+            $sql = buildprodquery($filters) . " LIMIT $prodsproseite OFFSET $offset";
         } else {
-            // Wenn keine Filter aktiv sind, standardmäßig nur 6 Produkte pro Seite anzeigen
-            $sql = "SELECT * FROM produkte LIMIT $products_per_page OFFSET $offset";
+            $sql = "SELECT * FROM produkte LIMIT $prodsproseite OFFSET $offset";
         }
 
         $produkte = prodaction($sql);
@@ -117,12 +115,11 @@
                 echo "</a>";
             }
             echo "</div>";
-            // Pagination-Links generieren
-            $total_products = count($produkte);
-            $total_pages = ceil($total_products / $products_per_page);
-
+            $alleprods = count($produkte);
+            $seiten = ceil($alleprods / $prodsproseite);
+            var_dump($alleprods);
             echo '<div id="seiten">';
-            for ($i = 1; $i <= $total_pages; $i++) {
+            for ($i = 1; $i <= $seiten; $i++) {
                 echo '<a href="index.php?page=' . $i . '"><button class="pagebtn">' . $i . '</button></a>';
             }
 
@@ -130,9 +127,6 @@
         } else {
             echo "Keine Produkte gefunden";
         }
-
-
-
         ?>
     </div>
 </body>
