@@ -24,7 +24,6 @@
                 </button>
 
             </div>
-            <!-- Kategorien (mehrere Auswahlmöglichkeiten) -->
             <h2 id="h2kat">Kategorien</h2>
             <div id="checkboxen">
                 <div id="kategorien">
@@ -65,16 +64,14 @@
 
     <div class="grid-container">
         <?php
-
         include_once "db.php";
         include_once "import.php";
         include_once "suche.php";
 
-        $prodsproseite = 6;
+        //max Produkte/Seite
+        $prodanzahlproseite = 6;
         $page = isset($_GET["page"]) ? (int)$_GET["page"] : 1;
-
-        $offset = ($page - 1) * $prodsproseite;
-
+        $offset = ($page - 1) * $prodanzahlproseite;
         $filters = array();
 
         if (isset($_GET['suchbegriff'])) {
@@ -88,14 +85,12 @@
         if (isset($_GET['prices'])) {
             $filters['prices'] = $_GET['prices'];
         }
-
-        if (!empty($filters)) {
-            $sql = buildprodquery($filters) . " LIMIT $prodsproseite OFFSET $offset";
-        } else {
-            $sql = "SELECT * FROM produkte LIMIT $prodsproseite OFFSET $offset";
-        }
-
+        
+        $filtersql = buildprodquery($filters);
+        $prodanzahl = count(prodaction($filtersql));
+        $sql = $filtersql . " LIMIT $prodanzahlproseite OFFSET $offset";
         $produkte = prodaction($sql);
+
         if (count($produkte) > 0) {
             foreach ($produkte as $produkt) {
                 $preis = number_format($produkt["preis"], 2, ',', '.');
@@ -114,15 +109,19 @@
                 echo "</div>";
                 echo "</a>";
             }
+
             echo "</div>";
-            $alleprods = count($produkte);
-            $seiten = ceil($alleprods / $prodsproseite);
-            var_dump($alleprods);
+
+            // Berechnung Seitenzahl
+            $seiten = ceil($prodanzahl / $prodanzahlproseite);
+            $aktseite = isset($_GET['page']) ? $_GET['page'] : 1;
+
             echo '<div id="seiten">';
             for ($i = 1; $i <= $seiten; $i++) {
-                echo '<a href="index.php?page=' . $i . '"><button class="pagebtn">' . $i . '</button></a>';
+                // Link generieren + Filterparameteer
+                $filterParams = http_build_query(array_merge($_GET, ['page' => $i]));
+                echo '<a href="index.php?' . $filterParams . '"><button class="pagebtn"' . ($aktseite == $i ? ' style="background-color: #DDD;"' : '') . '>' . $i . '</button></a>';
             }
-
             echo '</div>';
         } else {
             echo "Keine Produkte gefunden";
